@@ -39,8 +39,19 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
   };
 
   useEffect(() => {
+    // Employees don't get a company directory — take them straight to their
+    // own profile. Only admins see the full employee grid below.
+    if (session?.user && !isAdmin) {
+      navigate(`/dashboard/employees/${session.user.id}`, { replace: true });
+      return;
+    }
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (session?.user && !isAdmin) {
+    return null;
+  }
 
   const filteredEmployees = employees.filter(
     (emp) =>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { clearSession, loadSession } from "../../auth/services/authApi";
 
 interface NavbarProps {
   onLogout?: () => void;
@@ -22,12 +23,18 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
     return localStorage.getItem("dayflow.check_in_time");
   });
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setIsOpen(false);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(target)) {
+        setIsProfileOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -49,6 +56,26 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
     localStorage.setItem("dayflow.is_checked_in", "false");
     localStorage.removeItem("dayflow.check_in_time");
     setIsOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsProfileOpen(false);
+    clearSession();
+    if (onLogout) {
+      onLogout();
+      return;
+    }
+    navigate("/signin");
+  };
+
+  const handleProfileClick = () => {
+    setIsProfileOpen(false);
+    const session = loadSession();
+    if (session?.user?.role === "EMPLOYEE" && session.user.id) {
+      navigate(`/dashboard/employees/${session.user.id}`);
+      return;
+    }
+    navigate("/dashboard/profile");
   };
 
   return (
@@ -153,22 +180,53 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
           )}
         </div>
 
-        {/* Profile Avatar */}
-        <button className="navbar-avatar-btn" onClick={onLogout} title="Logout" aria-label="Profile">
-          <div className="navbar-avatar">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </div>
-        </button>
+        {/* Profile Menu */}
+        <div className="navbar-profile-menu" ref={profileDropdownRef}>
+          <button
+            type="button"
+            className="navbar-avatar-btn"
+            onClick={() => setIsProfileOpen((open) => !open)}
+            title="Open profile menu"
+            aria-label="Profile menu"
+            aria-expanded={isProfileOpen}
+            aria-haspopup="menu"
+          >
+            <div className="navbar-avatar">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+          </button>
+
+          {isProfileOpen && (
+            <div className="navbar-profile-dropdown" role="menu">
+              <button type="button" className="navbar-profile-link" onClick={handleProfileClick} role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                My Profile
+              </button>
+              <div className="navbar-menu-divider" />
+              <button type="button" className="navbar-logout-btn" onClick={handleLogout} role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Log out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

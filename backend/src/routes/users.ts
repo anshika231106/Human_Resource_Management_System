@@ -9,20 +9,32 @@ import { sendCredentialsEmail } from '../lib/sendCredentialsEmail';
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
+<<<<<<< Updated upstream
 // Basic admin auth middleware
 export const requireAdmin = (req: Request, res: Response, next: Function) => {
+=======
+// Requires a valid JWT for any signed-in user (admin or employee)
+const requireAuth = (req: Request, res: Response, next: Function) => {
+>>>>>>> Stashed changes
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
-  
+
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as any;
-    if (decoded.role !== 'ADMIN') return res.status(403).json({ error: 'Forbidden. Admin only.' });
     (req as any).user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' });
   }
+};
+
+// Requires a valid JWT belonging to an admin
+const requireAdmin = (req: Request, res: Response, next: Function) => {
+  requireAuth(req, res, () => {
+    if ((req as any).user.role !== 'ADMIN') return res.status(403).json({ error: 'Forbidden. Admin only.' });
+    next();
+  });
 };
 
 router.post('/employee', requireAdmin, async (req: Request, res: Response) => {
@@ -103,13 +115,20 @@ router.post('/employee', requireAdmin, async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/users - Fetch all employees from database
-router.get('/', async (_req: Request, res: Response) => {
+// GET /api/users - Fetch employees from database.
+// Admins get everyone; employees only ever get their own profile back.
+router.get('/', requireAuth, async (req: Request, res: Response) => {
   try {
+<<<<<<< Updated upstream
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+=======
+    const requester = (req as any).user;
+    const isAdmin = requester.role === 'ADMIN';
+>>>>>>> Stashed changes
 
     const profiles = await prisma.employeeProfile.findMany({
+      where: isAdmin ? undefined : { userId: requester.sub },
       orderBy: { name: 'asc' },
       include: {
         user: { select: { id: true, email: true, role: true } },
@@ -151,13 +170,17 @@ router.get('/', async (_req: Request, res: Response) => {
   }
 });
 
-// GET /api/users/:id - Fetch single employee details from database
-router.get('/:id', async (req: Request, res: Response) => {
+// GET /api/users/:id - Fetch single employee details from database.
+// Employees may only fetch their own profile; admins may fetch anyone's.
+router.get('/:id', requireAuth, async (req: Request, res: Response) => {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const { id } = req.params;
+    const requester = (req as any).user;
+    const isAdmin = requester.role === 'ADMIN';
+
     const profile = await prisma.employeeProfile.findFirst({
       where: { OR: [{ id }, { userId: id }, { employeeCode: id }] },
       include: {
@@ -173,6 +196,10 @@ router.get('/:id', async (req: Request, res: Response) => {
 
     if (!profile) {
       return res.status(404).json({ error: 'Employee not found' });
+    }
+
+    if (!isAdmin && profile.userId !== requester.sub) {
+      return res.status(403).json({ error: 'Forbidden. You can only view your own profile.' });
     }
 
     const salary = profile.salaryStructures[0];

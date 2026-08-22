@@ -22,12 +22,22 @@ export async function createEmployee(data: {
 }
 
 export async function fetchEmployees() {
-  const response = await axios.get(`${API_BASE_URL}/users`);
+  const session = loadSession();
+  if (!session?.token) throw new Error('Not authenticated');
+
+  const response = await axios.get(`${API_BASE_URL}/users`, {
+    headers: { Authorization: `Bearer ${session.token}` }
+  });
   return response.data;
 }
 
 export async function fetchEmployeeById(id: string) {
-  const response = await axios.get(`${API_BASE_URL}/users/${id}`);
+  const session = loadSession();
+  if (!session?.token) throw new Error('Not authenticated');
+
+  const response = await axios.get(`${API_BASE_URL}/users/${id}`, {
+    headers: { Authorization: `Bearer ${session.token}` }
+  });
   return response.data;
 }
 

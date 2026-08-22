@@ -7,7 +7,7 @@ interface EmployeeCardProps {
   onView?: (id: string) => void;
 }
 
-export const EmployeeCard = ({ employee, selected, onSelect, onView }: EmployeeCardProps) => {
+export const EmployeeCard = ({ employee, selected, onView }: EmployeeCardProps) => {
   const initials = employee.name
     .split(" ")
     .map((n) => n[0])

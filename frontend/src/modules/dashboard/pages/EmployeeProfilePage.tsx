@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { fetchEmployeeById } from "../services/dashboardApi";
+import { loadSession } from "../../auth/services/authApi";
 import type { Employee } from "../types/dashboard.types";
 import "../styles/Dashboard.css";
 
@@ -17,6 +18,7 @@ const Detail = ({ label, value }: { label: string; value?: string }) => (
 export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => {
   const navigate = useNavigate();
   const { employeeId } = useParams();
+  const isEmployeeProfile = loadSession()?.user.role === "EMPLOYEE";
   const [activeTab, setActiveTab] = useState<"resume" | "personal" | "salary" | "security">("resume");
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
@@ -51,8 +53,8 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
       <div className="dashboard-page">
         <Navbar onLogout={onLogout} />
         <main className="dashboard-main profile-not-found">
-          <p>Employee not found.</p>
-          <button className="profile-back-btn" onClick={() => navigate("/dashboard")}>Back to employees</button>
+          <p>{isEmployeeProfile ? "My profile was not found." : "Employee not found."}</p>
+          {!isEmployeeProfile && <button className="profile-back-btn" onClick={() => navigate("/dashboard")}>Back to employees</button>}
         </main>
       </div>
     );
@@ -78,11 +80,13 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
     <div className="dashboard-page">
       <Navbar onLogout={onLogout} />
       <main className="dashboard-main employee-profile">
-        <button className="profile-back-btn" onClick={() => navigate("/dashboard")} aria-label="Back to employees">
-          <span aria-hidden="true">←</span> Employees
-        </button>
+        {!isEmployeeProfile && (
+          <button className="profile-back-btn" onClick={() => navigate("/dashboard")} aria-label="Back to employees">
+            <span aria-hidden="true">←</span> Employees
+          </button>
+        )}
 
-        <div className="profile-titlebar"><h1>Employee Profile</h1><span>Employee record</span></div>
+        <div className="profile-titlebar"><h1>{isEmployeeProfile ? "My Profile" : "Employee Profile"}</h1><span>{isEmployeeProfile ? "Personal record" : "Employee record"}</span></div>
         <header className="profile-header">
           <div className="profile-avatar-wrap">
             <div className="profile-avatar" style={{ background: `hsl(${hue}, 30%, 22%)`, color: `hsl(${hue}, 50%, 65%)` }}>
