@@ -1,9 +1,16 @@
-import "./App.css";
+import { useState } from "react";
+import { SignUpPage, SignInPage } from "./modules/auth";
 
 function App() {
+  const [currentView, setCurrentView] = useState<"signup" | "signin">("signup");
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-bold underline text-blue-600">DayFlow HRMS</h1>
+    <div>
+      {currentView === "signup" ? (
+        <SignUpPage onNavigateToSignIn={() => setCurrentView("signin")} />
+      ) : (
+        <SignInPage onNavigateToSignUp={() => setCurrentView("signup")} />
+      )}
     </div>
   );
 }
