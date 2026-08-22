@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  EMPLOYEE
+  ADMIN
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  HALF_DAY
+  LEAVE
+}
+
+enum LeaveType {
+  PAID
+  SICK
+  UNPAID
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  role                Role      @default(EMPLOYEE)
+  mustChangePassword  Boolean   @default(true)
+  emailVerifiedAt     DateTime?
+  createdAt           DateTime  @default(now())
+
+  profile             EmployeeProfile?
+  reviewedLeaves      LeaveRequest[]   @relation("Reviewer")
+  auditLogs           AuditLog[]
+  notifications       Notification[]
+}
+
+model EmployeeProfile {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  employeeCode     String    @unique
+  name             String
+  phone            String
+  address          String?
+  jobTitle         String
+  department       String
+  joinDate         DateTime
+  avatarUrl        String?
+  isActive         Boolean   @default(true)
+
+  managerId        String?
+  manager          EmployeeProfile?  @relation("ManagerReports", fields: [managerId], references: [id])
+  reports          EmployeeProfile[] @relation("ManagerReports")
+
+  documents        Document[]
+  attendance       AttendanceRecord[]
+  leaveRequests    LeaveRequest[]
+  leaveBalances    LeaveBalance[]
+  salaryStructures SalaryStructure[]
+  payslips         Payslip[]
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  name        String
+  fileUrl     String
+  uploadedAt  DateTime @default(now())
+}
+
+model AttendanceRecord {
+  id          String            @id @default(cuid())
+  employeeId  String
+  employee    EmployeeProfile   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date        DateTime          @db.Date
+  checkIn     DateTime?
+  checkOut    DateTime?
+  status      AttendanceStatus  @default(PRESENT)
+  note        String?
+
+  @@unique([employeeId, date])
+  @@index([employeeId, date])
+}
+
+model LeaveRequest {
+  id              String       @id @default(cuid())
+  employeeId      String
+  employee        EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type            LeaveType
+  startDate       DateTime     @db.Date
+  endDate         DateTime     @db.Date
+  remarks         String?
+  status          LeaveStatus  @default(PENDING)
+  reviewerId      String?
+  reviewer        User?        @relation("Reviewer", fields: [reviewerId], references: [id])
+  reviewComments  String?
+  createdAt       DateTime     @default(now())
+
+  @@index([status])
+  @@index([employeeId])
+}
+
+model LeaveBalance {
+  id             String   @id @default(cuid())
+  employeeId     String
+  employee       EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  year           Int
+  paidDays       Decimal  @db.Decimal(5, 1) @default(24)
+  sickDays       Decimal  @db.Decimal(5, 1) @default(12)
+
+  @@unique([employeeId, year])
+}
+
+model SalaryStructure {
+  id              String    @id @default(cuid())
+  employeeId      String
+  employee        EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  basicSalary     Decimal   @db.Decimal(12, 2)
+  hraPercent      Decimal   @db.Decimal(5, 2) @default(50)
+  pfPercent       Decimal   @db.Decimal(5, 2) @default(12)
+  effectiveFrom   DateTime  @db.Date
+
+  @@unique([employeeId, effectiveFrom])
+}
+
+model Payslip {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  year        Int
+  month       Int
+  grossPay    Decimal  @db.Decimal(12, 2)
+  netPay      Decimal  @db.Decimal(12, 2)
+  generatedAt DateTime @default(now())
+
+  @@unique([employeeId, year, month])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id])
+  action    String
+  targetId  String?
+  createdAt DateTime @default(now())
+}
