@@ -1,36 +1,7 @@
-// Dayflow — data model.
-//
-// This file is the single source of truth for the domain. The model shapes are
-// BE1's; the comments record the invariants the HR-domain services rely on, so
-// nobody has to reverse-engineer them from service code later.
-//
-// Four decisions worth defending if a judge asks (ARCHITECTURE.md §4):
-//
-//  1. @@unique([employeeId, date]) on AttendanceRecord is what makes check-in
-//     idempotent. A double-tapped button cannot produce two rows, and that is
-//     enforced by Postgres rather than by hopeful application code.
-//  2. SalaryStructure is append-only and effective-dated. A raise INSERTs a new
-//     row instead of UPDATEing the old one, so historical payslips stay
-//     reproducible — which is what "ensure payroll accuracy" (3.6.2) requires.
-//  3. Money is Decimal, never Float. Floating-point payroll that does not add
-//     up is an instant credibility loss.
-//  4. Employees are deactivated (isActive = false), never deleted, preserving
-//     the attendance and payroll history a real HR system must keep.
-//
-// Note on identifiers: HTTP routes address people by *User.id*, and services
-// resolve that to EmployeeProfile internally. That keeps the ownership guard in
-// middleware/auth.ts a pure synchronous comparison against the session subject.
-// A guard that has to hit the database to learn who owns a row is exactly where
-// IDOR bugs come from.
-
 generator client {
   provider = "prisma-client-js"
 }
 
-// No `url` here, deliberately. Prisma 7 moved the connection string out of the
-// schema: Migrate reads it from prisma.config.ts, and the client is constructed
-// with a driver adapter (see src/lib/prisma.ts). Adding `url` back is a P1012
-// at generate time.
 datasource db {
   provider = "postgresql"
 }
@@ -60,38 +31,38 @@ enum LeaveStatus {
 }
 
 model User {
-  id                 String    @id @default(cuid())
-  email              String    @unique
-  passwordHash       String
-  role               Role      @default(EMPLOYEE)
-  mustChangePassword Boolean   @default(true)
-  emailVerifiedAt    DateTime?
-  createdAt          DateTime  @default(now())
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  role                Role      @default(EMPLOYEE)
+  mustChangePassword  Boolean   @default(true)
+  emailVerifiedAt     DateTime?
+  createdAt           DateTime  @default(now())
 
-  profile        EmployeeProfile?
-  reviewedLeaves LeaveRequest[]   @relation("Reviewer")
-  auditLogs      AuditLog[]
-  notifications  Notification[]
+  profile             EmployeeProfile?
+  reviewedLeaves      LeaveRequest[]   @relation("Reviewer")
+  auditLogs           AuditLog[]
+  notifications       Notification[]
 }
 
 model EmployeeProfile {
-  id     String @id @default(cuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  employeeCode String    @unique
-  name         String
-  phone        String
-  address      String?
-  jobTitle     String
-  department   String
-  joinDate     DateTime
-  avatarUrl    String?
-  isActive     Boolean   @default(true)
+  employeeCode     String    @unique
+  name             String
+  phone            String
+  address          String?
+  jobTitle         String
+  department       String
+  joinDate         DateTime
+  avatarUrl        String?
+  isActive         Boolean   @default(true)
 
-  managerId String?
-  manager   EmployeeProfile?  @relation("ManagerReports", fields: [managerId], references: [id])
-  reports   EmployeeProfile[] @relation("ManagerReports")
+  managerId        String?
+  manager          EmployeeProfile?  @relation("ManagerReports", fields: [managerId], references: [id])
+  reports          EmployeeProfile[] @relation("ManagerReports")
 
   documents        Document[]
   attendance       AttendanceRecord[]
@@ -99,95 +70,81 @@ model EmployeeProfile {
   leaveBalances    LeaveBalance[]
   salaryStructures SalaryStructure[]
   payslips         Payslip[]
-
-  // The admin roster is searched by name, code and department (spec 3.2.2).
-  @@index([department])
-  @@index([isActive])
 }
 
 model Document {
-  id         String          @id @default(cuid())
-  employeeId String
-  employee   EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  name       String
-  fileUrl    String
-  uploadedAt DateTime        @default(now())
-
-  @@index([employeeId])
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  name        String
+  fileUrl     String
+  uploadedAt  DateTime @default(now())
 }
 
 model AttendanceRecord {
-  id         String           @id @default(cuid())
-  employeeId String
-  employee   EmployeeProfile  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  date       DateTime         @db.Date
-  checkIn    DateTime?
-  checkOut   DateTime?
-  status     AttendanceStatus @default(PRESENT)
-  note       String?
+  id          String            @id @default(cuid())
+  employeeId  String
+  employee    EmployeeProfile   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date        DateTime          @db.Date
+  checkIn     DateTime?
+  checkOut    DateTime?
+  status      AttendanceStatus  @default(PRESENT)
+  note        String?
 
-  // Day-grain uniqueness: the database, not the client, guarantees one
-  // attendance row per person per day.
   @@unique([employeeId, date])
   @@index([employeeId, date])
-  @@index([date])
 }
 
 model LeaveRequest {
-  id             String          @id @default(cuid())
-  employeeId     String
-  employee       EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  type           LeaveType
-  startDate      DateTime        @db.Date
-  endDate        DateTime        @db.Date
-  remarks        String?
-  status         LeaveStatus     @default(PENDING)
-  reviewerId     String?
-  reviewer       User?           @relation("Reviewer", fields: [reviewerId], references: [id])
-  reviewComments String?
-  createdAt      DateTime        @default(now())
+  id              String       @id @default(cuid())
+  employeeId      String
+  employee        EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type            LeaveType
+  startDate       DateTime     @db.Date
+  endDate         DateTime     @db.Date
+  remarks         String?
+  status          LeaveStatus  @default(PENDING)
+  reviewerId      String?
+  reviewer        User?        @relation("Reviewer", fields: [reviewerId], references: [id])
+  reviewComments  String?
+  createdAt       DateTime     @default(now())
 
   @@index([status])
   @@index([employeeId])
-  @@index([employeeId, startDate, endDate])
 }
 
 model LeaveBalance {
-  id         String          @id @default(cuid())
-  employeeId String
-  employee   EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  year       Int
-  // These are *remaining* days, decremented inside the approval transaction.
-  paidDays   Decimal         @default(24) @db.Decimal(5, 1)
-  sickDays   Decimal         @default(12) @db.Decimal(5, 1)
+  id             String   @id @default(cuid())
+  employeeId     String
+  employee       EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  year           Int
+  paidDays       Decimal  @db.Decimal(5, 1) @default(24)
+  sickDays       Decimal  @db.Decimal(5, 1) @default(12)
 
   @@unique([employeeId, year])
 }
 
 model SalaryStructure {
-  id            String          @id @default(cuid())
-  employeeId    String
-  employee      EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  basicSalary   Decimal         @db.Decimal(12, 2)
-  hraPercent    Decimal         @default(50) @db.Decimal(5, 2)
-  pfPercent     Decimal         @default(12) @db.Decimal(5, 2)
-  effectiveFrom DateTime        @db.Date
+  id              String    @id @default(cuid())
+  employeeId      String
+  employee        EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  basicSalary     Decimal   @db.Decimal(12, 2)
+  hraPercent      Decimal   @db.Decimal(5, 2) @default(50)
+  pfPercent       Decimal   @db.Decimal(5, 2) @default(12)
+  effectiveFrom   DateTime  @db.Date
 
-  // Append-only history. The unique constraint means "two raises on the same
-  // day" is a 409 rather than a silent overwrite of the earlier one.
   @@unique([employeeId, effectiveFrom])
-  @@index([employeeId, effectiveFrom])
 }
 
 model Payslip {
-  id          String          @id @default(cuid())
+  id          String   @id @default(cuid())
   employeeId  String
   employee    EmployeeProfile @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   year        Int
   month       Int
-  grossPay    Decimal         @db.Decimal(12, 2)
-  netPay      Decimal         @db.Decimal(12, 2)
-  generatedAt DateTime        @default(now())
+  grossPay    Decimal  @db.Decimal(12, 2)
+  netPay      Decimal  @db.Decimal(12, 2)
+  generatedAt DateTime @default(now())
 
   @@unique([employeeId, year, month])
 }
@@ -199,17 +156,13 @@ model Notification {
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
-
-  @@index([userId, read])
 }
 
 model AuditLog {
-  id       String   @id @default(cuid())
-  actorId  String
-  actor    User     @relation(fields: [actorId], references: [id])
-  action   String
-  targetId String?
+  id        String   @id @default(cuid())
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id])
+  action    String
+  targetId  String?
   createdAt DateTime @default(now())
-
-  @@index([targetId])
 }
