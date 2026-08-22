@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SignUpPage, SignInPage } from "./modules/auth";
 
 function App() {
-  const [currentView, setCurrentView] = useState<"signup" | "signin">("signup");
+  const [currentView, setCurrentView] = useState<"signup" | "signin">("signin");
 
   return (
     <div>
