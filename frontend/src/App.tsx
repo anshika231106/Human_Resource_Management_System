@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUpPage, SignInPage } from "./modules/auth";
+import { DashboardPage } from "./modules/dashboard";
 
 function App() {
-  const [currentView, setCurrentView] = useState<"signup" | "signin">("signin");
-
   return (
-    <div>
-      {currentView === "signup" ? (
-        <SignUpPage onNavigateToSignIn={() => setCurrentView("signin")} />
-      ) : (
-        <SignInPage onNavigateToSignUp={() => setCurrentView("signup")} />
-      )}
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/signin" replace />} />
+      <Route path="/signin" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="*" element={<Navigate to="/signin" replace />} />
+    </Routes>
   );
 }
 

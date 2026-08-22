@@ -33,6 +33,56 @@
   }
 }
 
+/* ===== Role Toggle Switch ===== */
+.role-toggle-container {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 28px;
+  gap: 4px;
+}
+
+.role-toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.role-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.role-toggle-btn:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.role-toggle-btn.active {
+  background: #cb6af0;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(203, 106, 240, 0.3);
+}
+
+.employee-no-signup {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
 /* ===== Header ===== */
 .signup-header {
   text-align: center;
@@ -338,6 +388,37 @@
 
 .footer-links a:hover {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Validation Errors ===== */
+.floating-group.has-error input {
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.floating-group.has-error input:focus {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.02);
+}
+
+.field-error {
+  display: block;
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 5px;
+  padding-left: 2px;
+  animation: errorSlideIn 0.25s ease-out;
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== Responsive ===== */
