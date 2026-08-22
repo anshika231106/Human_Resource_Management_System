@@ -106,12 +106,18 @@ router.post('/employee', requireAdmin, async (req: Request, res: Response) => {
 // GET /api/users - Fetch all employees from database
 router.get('/', async (_req: Request, res: Response) => {
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const profiles = await prisma.employeeProfile.findMany({
       orderBy: { name: 'asc' },
       include: {
         user: { select: { id: true, email: true, role: true } },
         manager: { select: { id: true, name: true } },
         salaryStructures: { orderBy: { effectiveFrom: 'desc' }, take: 1 },
+        attendance: {
+          where: { date: today }
+        }
       },
     });
 
@@ -134,6 +140,7 @@ router.get('/', async (_req: Request, res: Response) => {
         pfPercent: salary ? Number(salary.pfPercent) : 12,
         avatar: p.avatarUrl || null,
         status: p.isActive ? 'Active' : 'Inactive',
+        todayStatus: p.attendance[0]?.status || 'ABSENT',
       };
     });
 
@@ -147,6 +154,9 @@ router.get('/', async (_req: Request, res: Response) => {
 // GET /api/users/:id - Fetch single employee details from database
 router.get('/:id', async (req: Request, res: Response) => {
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const { id } = req.params;
     const profile = await prisma.employeeProfile.findFirst({
       where: { OR: [{ id }, { userId: id }, { employeeCode: id }] },
@@ -155,6 +165,9 @@ router.get('/:id', async (req: Request, res: Response) => {
         manager: { select: { id: true, name: true } },
         salaryStructures: { orderBy: { effectiveFrom: 'desc' }, take: 1 },
         documents: true,
+        attendance: {
+          where: { date: today }
+        }
       },
     });
 
@@ -180,6 +193,7 @@ router.get('/:id', async (req: Request, res: Response) => {
       pfPercent: salary ? Number(salary.pfPercent) : 12,
       avatar: profile.avatarUrl || null,
       status: profile.isActive ? 'Active' : 'Inactive',
+      todayStatus: profile.attendance[0]?.status || 'ABSENT',
       documents: profile.documents.map((d) => ({
         name: d.name,
         fileUrl: d.fileUrl,

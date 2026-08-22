@@ -432,32 +432,26 @@
   text-overflow: ellipsis;
 }
 
-/* ===== Select Button ===== */
-.employee-select-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.select-circle {
-  display: block;
-  width: 18px;
-  height: 18px;
+/* ===== Status Icon ===== */
+.employee-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  user-select: none;
   transition: all 0.2s ease;
 }
 
-.employee-select-btn:hover .select-circle {
-  border-color: rgba(203, 106, 240, 0.5);
-}
-
-.employee-select-btn.active .select-circle {
-  border-color: #cb6af0;
-  background: #cb6af0;
-  box-shadow: inset 0 0 0 3px #141414;
+.employee-status-icon:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
 }
 
 /* ===== Empty State ===== */
