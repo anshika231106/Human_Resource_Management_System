@@ -7,7 +7,10 @@ import { AttendanceTable } from "../components/AttendanceTable";
 import { AttendanceEmptyState } from "../components/AttendanceEmptyState";
 import "../styles/Attendance.css";
 
-export const AttendancePage = () => {
+import { loadSession } from "../../auth/services/authApi";
+import { EmployeeAttendancePage } from "./EmployeeAttendancePage";
+
+const AdminAttendancePage = () => {
   const navigate = useNavigate();
   const {
     selectedDate,
@@ -175,4 +178,12 @@ export const AttendancePage = () => {
       </main>
     </div>
   );
+};
+
+export const AttendancePage = () => {
+  const session = loadSession();
+  if (session?.user?.role === "EMPLOYEE") {
+    return <EmployeeAttendancePage />;
+  }
+  return <AdminAttendancePage />;
 };

@@ -25,3 +25,27 @@ export async function fetchAttendance(date: string): Promise<AttendanceRecord[]>
 
   return data;
 }
+
+/**
+ * Fetch attendance records for a specific employee by month.
+ * @param employeeId - Employee or User ID
+ * @param month - ISO month string (YYYY-MM)
+ */
+export async function fetchEmployeeAttendance(employeeId: string, month: string): Promise<AttendanceRecord[]> {
+  const session = localStorage.getItem("dayflow.session");
+  const token = session ? JSON.parse(session)?.token : null;
+
+  const { data } = await axios.get<AttendanceRecord[]>(
+    `${API_BASE_URL}/attendance/employee/${employeeId}`,
+    {
+      params: { month },
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    }
+  );
+
+  if (!Array.isArray(data)) {
+    throw new Error("Attendance API returned an invalid response");
+  }
+
+  return data;
+}
