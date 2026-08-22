@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { SignUpPage, SignInPage } from "./modules/auth";
+import { DashboardPage } from "./modules/dashboard";
+
+type View = "signup" | "signin" | "dashboard";
 
 function App() {
-  const [currentView, setCurrentView] = useState<"signup" | "signin">("signin");
+  const [currentView, setCurrentView] = useState<View>("signin");
 
   return (
     <div>
-      {currentView === "signup" ? (
+      {currentView === "signup" && (
         <SignUpPage onNavigateToSignIn={() => setCurrentView("signin")} />
-      ) : (
-        <SignInPage onNavigateToSignUp={() => setCurrentView("signup")} />
+      )}
+      {currentView === "signin" && (
+        <SignInPage
+          onNavigateToSignUp={() => setCurrentView("signup")}
+          onSignInSuccess={() => setCurrentView("dashboard")}
+        />
+      )}
+      {currentView === "dashboard" && (
+        <DashboardPage onLogout={() => setCurrentView("signin")} />
       )}
     </div>
   );

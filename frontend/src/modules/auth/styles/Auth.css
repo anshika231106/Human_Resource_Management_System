@@ -340,6 +340,37 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* ===== Validation Errors ===== */
+.floating-group.has-error input {
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.floating-group.has-error input:focus {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.02);
+}
+
+.field-error {
+  display: block;
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 5px;
+  padding-left: 2px;
+  animation: errorSlideIn 0.25s ease-out;
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 540px) {
   .signup-card {

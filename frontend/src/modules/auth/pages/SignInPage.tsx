@@ -5,13 +5,34 @@ import "../styles/Auth.css";
 
 interface SignInPageProps {
   onNavigateToSignUp?: () => void;
+  onSignInSuccess?: () => void;
 }
 
-export const SignInPage = ({ onNavigateToSignUp }: SignInPageProps) => {
+export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  const validate = (): boolean => {
+    const newErrors: { email?: string; password?: string } = {};
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Enter a valid email";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (validate()) {
+      onSignInSuccess?.();
+    }
   };
 
   return (
@@ -22,26 +43,39 @@ export const SignInPage = ({ onNavigateToSignUp }: SignInPageProps) => {
           subtitle="Sign in to your enterprise workspace."
         />
 
-        <form className="signup-form" onSubmit={handleSubmit}>
+        <form className="signup-form" onSubmit={handleSubmit} noValidate>
           {/* Email */}
-          <div className="floating-group">
+          <div className={`floating-group${errors.email ? " has-error" : ""}`}>
             <input
               id="signin-email"
               type="email"
               placeholder=" "
               autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+              }}
             />
             <label htmlFor="signin-email">Email Address</label>
+            {errors.email && <span className="field-error">{errors.email}</span>}
           </div>
 
           {/* Password */}
-          <div className="floating-group">
+          <div className={`floating-group${errors.password ? " has-error" : ""}`}>
             <input
               id="signin-password"
               type={showPassword ? "text" : "password"}
               className="password-input"
               placeholder=" "
               autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (errors.password) setErrors((p) => ({ ...p, password: undefined }));
+              }}
             />
             <label htmlFor="signin-password">Password</label>
             <button
@@ -63,6 +97,7 @@ export const SignInPage = ({ onNavigateToSignUp }: SignInPageProps) => {
                 </svg>
               )}
             </button>
+            {errors.password && <span className="field-error">{errors.password}</span>}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-8px' }}>
