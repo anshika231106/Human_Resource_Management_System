@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthHeader } from "../components/AuthHeader";
 import { AuthFooter } from "../components/AuthFooter";
 import "../styles/Auth.css";
@@ -9,6 +10,7 @@ interface SignInPageProps {
 }
 
 export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPageProps) => {
+  const navigate = useNavigate();
   const [role, setRole] = useState<"admin" | "employee">("admin");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -33,6 +35,15 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
     e.preventDefault();
     if (validate()) {
       onSignInSuccess?.();
+      navigate("/dashboard");
+    }
+  };
+
+  const handleSignUpClick = () => {
+    if (onNavigateToSignUp) {
+      onNavigateToSignUp();
+    } else {
+      navigate("/signup");
     }
   };
 
@@ -149,9 +160,9 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
         {role === "admin" ? (
           <p className="signin-link">
             Don't have an account?
-            <button type="button" className="text-link-btn" onClick={onNavigateToSignUp}>
+            <Link to="/signup" className="text-link-btn" onClick={handleSignUpClick}>
               Sign Up
-            </button>
+            </Link>
           </p>
         ) : (
           <p className="signin-link employee-no-signup">
