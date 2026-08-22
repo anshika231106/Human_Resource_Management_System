@@ -1,75 +1,34 @@
-# React + TypeScript + Vite
+## Authentication — Frontend Screens
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Sign In Page
+Standard credential login. Fields:
+- **Login ID / Email** — accepts either the system-generated Login ID or the employee's email
+- **Password**
 
-Currently, two official plugins are available:
+On submit, calls `POST /api/auth/signin`. Invalid credentials surface a field-level
+error rather than a generic alert. Successful login redirects by role: employees to
+`/dashboard`, admins to `/admin/dashboard`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Footer link routes to Sign Up.
 
-## React Compiler
+### Sign Up Page — Admin/HR Only
+**This is not public self-registration.** Per the wireframe note, a normal user
+cannot create their own account. This screen is used by an Admin/HR Officer to
+provision a new employee. It must be gated behind `requireRole('ADMIN')`, not
+exposed as an open route.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Fields:
+| Field | Notes |
+|---|---|
+| Company Name | with logo upload |
+| Name | employee's full name |
+| Email | employee's email |
+| Phone | |
+| Password | pre-filled/disabled — see auto-generation below |
+| Confirm Password | |
 
-## Expanding the ESLint configuration
+On submit, calls an admin-scoped endpoint (e.g. `POST /api/employees` — **not**
+`/api/auth/signup`) and creates both the `User` and `EmployeeProfile` records.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+### Login ID auto-generation
+The system generates the Login ID; it is never entered manually. Format:
