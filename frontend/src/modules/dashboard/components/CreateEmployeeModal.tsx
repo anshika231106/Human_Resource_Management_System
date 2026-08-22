@@ -52,46 +52,48 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }: CreateEmploy
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-row">
             <div className="form-group">
-              <label>First Name</label>
-              <input type="text" name="firstName" required value={formData.firstName} onChange={handleChange} />
+              <label htmlFor="employee-first-name">First Name <span className="required-mark">*</span></label>
+              <input id="employee-first-name" type="text" name="firstName" required value={formData.firstName} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label>Last Name</label>
-              <input type="text" name="lastName" required value={formData.lastName} onChange={handleChange} />
+              <label htmlFor="employee-last-name">Last Name <span className="required-mark">*</span></label>
+              <input id="employee-last-name" type="text" name="lastName" required value={formData.lastName} onChange={handleChange} />
             </div>
           </div>
           
           <div className="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" required value={formData.email} onChange={handleChange} />
+            <label htmlFor="employee-email">Email Address <span className="required-mark">*</span></label>
+            <input id="employee-email" type="email" name="email" required value={formData.email} onChange={handleChange} />
           </div>
 
           <div className="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
+            <label htmlFor="employee-phone">Phone Number <span className="required-mark">*</span></label>
+            <input id="employee-phone" type="tel" name="phone" required value={formData.phone} onChange={handleChange} />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Job Title</label>
-              <input type="text" name="jobTitle" required value={formData.jobTitle} onChange={handleChange} />
+              <label htmlFor="employee-job-title">Job Title <span className="required-mark">*</span></label>
+              <input id="employee-job-title" type="text" name="jobTitle" required value={formData.jobTitle} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label>Department</label>
-              <select name="department" required value={formData.department} onChange={handleChange}>
-                <option value="">Select Dept</option>
+              <label htmlFor="employee-department">Department <span className="required-mark">*</span></label>
+              <div className="select-wrapper">
+                <select id="employee-department" name="department" required value={formData.department} onChange={handleChange}>
+                  <option value="">Select department</option>
                 <option value="Engineering">Engineering</option>
                 <option value="HR">HR</option>
                 <option value="Sales">Sales</option>
                 <option value="Design">Design</option>
                 <option value="Marketing">Marketing</option>
-              </select>
+                </select>
+              </div>
             </div>
           </div>
 
           <div className="form-group">
-            <label>Join Date</label>
-            <input type="date" name="joinDate" required value={formData.joinDate} onChange={handleChange} />
+            <label htmlFor="employee-join-date">Join Date <span className="required-mark">*</span></label>
+            <input id="employee-join-date" type="date" name="joinDate" required value={formData.joinDate} onChange={handleChange} />
           </div>
 
           <div className="modal-actions">

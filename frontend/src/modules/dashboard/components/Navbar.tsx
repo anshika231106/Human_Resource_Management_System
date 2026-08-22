@@ -74,7 +74,7 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] transition-all cursor-pointer text-xs font-medium text-white/80"
+            className="attendance-action-trigger flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-all cursor-pointer text-xs font-medium text-white/80"
             title={isCheckedIn ? "Click to Check Out" : "Click to Check In"}
           >
             <span
@@ -89,7 +89,7 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
 
           {/* Popover Menu */}
           {isOpen && (
-            <div className="absolute right-0 mt-2 w-64 p-4 rounded-2xl bg-[#141414] border border-white/10 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+            <div className="attendance-action-popover absolute right-0 mt-2 w-64 p-4 rounded-2xl bg-[#141414] border border-white/10 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
                 <div>
                   <h4 className="text-sm font-semibold text-white">Attendance Action</h4>

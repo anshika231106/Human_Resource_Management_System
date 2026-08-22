@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { EmployeeCard } from "../components/EmployeeCard";
 import { CreateEmployeeModal } from "../components/CreateEmployeeModal";
-import { mockEmployees } from "../data/mockEmployees";
+import { fetchEmployees } from "../services/dashboardApi";
+import type { Employee } from "../types/dashboard.types";
 import "../styles/Dashboard.css";
-import { loadSession } from "../../auth/services/authApi"; // new import
+import { loadSession } from "../../auth/services/authApi";
 
 interface DashboardPageProps {
   onLogout?: () => void;
@@ -13,17 +14,39 @@ interface DashboardPageProps {
 
 export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
   const navigate = useNavigate();
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Determine if current user is admin to allow employee creation
+
   const session = loadSession();
   const isAdmin = session?.user?.role === "ADMIN";
 
-  const filteredEmployees = mockEmployees.filter(
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchEmployees();
+      setEmployees(data);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load employees from database.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const filteredEmployees = employees.filter(
     (emp) =>
       emp.name.toLowerCase().includes(search.toLowerCase()) ||
-      emp.role.toLowerCase().includes(search.toLowerCase())
+      emp.role.toLowerCase().includes(search.toLowerCase()) ||
+      (emp.department && emp.department.toLowerCase().includes(search.toLowerCase()))
   );
 
   const toggleSelect = (id: string) => {
@@ -65,30 +88,42 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
             <input
               type="text"
               className="search-input"
-              placeholder="Search"
+              placeholder="Search employees..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>
 
-        {/* Employee Grid */}
-        <div className="employee-grid">
-          {filteredEmployees.map((emp) => (
-            <EmployeeCard
-              key={emp.id}
-              employee={emp}
-              selected={selectedIds.has(emp.id)}
-              onSelect={toggleSelect}
-              onView={handleViewEmployee}
-            />
-          ))}
-        </div>
-
-        {filteredEmployees.length === 0 && (
+        {/* Loading / Error / Employee Grid */}
+        {loading ? (
           <div className="empty-state">
-            <p>No employees found matching "{search}"</p>
+            <p>Loading employees from database...</p>
           </div>
+        ) : error ? (
+          <div className="empty-state">
+            <p style={{ color: "#ef4444" }}>{error}</p>
+          </div>
+        ) : (
+          <>
+            <div className="employee-grid">
+              {filteredEmployees.map((emp) => (
+                <EmployeeCard
+                  key={emp.id}
+                  employee={emp}
+                  selected={selectedIds.has(emp.id)}
+                  onSelect={toggleSelect}
+                  onView={handleViewEmployee}
+                />
+              ))}
+            </div>
+
+            {filteredEmployees.length === 0 && (
+              <div className="empty-state">
+                <p>No employees found matching "{search}"</p>
+              </div>
+            )}
+          </>
         )}
       </main>
 
@@ -96,8 +131,7 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         onSuccess={() => {
-          // Temporarily just alert success, in real app we'd refresh list
-          alert("Employee successfully created & credentials emailed!");
+          loadData();
           setIsModalOpen(false);
         }} 
       />

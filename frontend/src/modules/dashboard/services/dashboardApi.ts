@@ -20,3 +20,14 @@ export async function createEmployee(data: {
   });
   return response.data;
 }
+
+export async function fetchEmployees() {
+  const response = await axios.get(`${API_BASE_URL}/users`);
+  return response.data;
+}
+
+export async function fetchEmployeeById(id: string) {
+  const response = await axios.get(`${API_BASE_URL}/users/${id}`);
+  return response.data;
+}
+

@@ -43,7 +43,7 @@ export const AttendanceStatusBadge = ({ status }: AttendanceStatusBadgeProps) =>
 
   return (
     <span
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border ${config.bg} ${config.border} ${config.text} transition-all duration-200`}
+      className={`attendance-status-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border ${config.bg} ${config.border} ${config.text} transition-all duration-200`}
     >
       <span className={`w-2 h-2 rounded-full ${config.dot}`} />
       {config.label}
