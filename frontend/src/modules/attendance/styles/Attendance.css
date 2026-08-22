@@ -42,6 +42,11 @@
   background: rgba(255, 255, 255, 0.045);
 }
 
+.attendance-search {
+  width: min(480px, 100%);
+  max-width: 480px !important;
+}
+
 .attendance-search svg {
   left: 14px !important;
   width: 16px !important;
@@ -98,6 +103,8 @@
 }
 
 .attendance-date-header > div {
+  min-height: 42px;
+  padding: 8px 18px !important;
   border-radius: 10px;
   background: rgba(203, 106, 240, 0.07);
   border-color: rgba(203, 106, 240, 0.2);
@@ -229,6 +236,10 @@
     justify-content: center;
   }
 
+  .attendance-action-popover {
+    width: min(280px, calc(100vw - 32px)) !important;
+  }
+
   .attendance-stats {
     gap: 10px;
     margin-bottom: 14px;
@@ -248,4 +259,33 @@
   .attendance-stat-card p.text-3xl {
     font-size: 1.5rem;
   }
+}
+
+.attendance-status-badge {
+  min-width: 78px;
+  justify-content: center;
+  padding: 7px 12px !important;
+  line-height: 1;
+}
+
+.attendance-action-trigger {
+  min-height: 38px;
+  padding: 8px 14px !important;
+}
+
+.attendance-action-popover {
+  width: 280px !important;
+  padding: 18px !important;
+  border-radius: 14px !important;
+}
+
+.attendance-action-popover > div:first-child {
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.attendance-action-popover button {
+  min-height: 40px;
+  padding: 10px 16px !important;
+  border-radius: 9px !important;
 }

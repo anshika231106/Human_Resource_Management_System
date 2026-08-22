@@ -234,6 +234,7 @@
   font-size: 13px;
   color: rgba(255,255,255,0.75);
 }
+.required-mark { color: #ff86ed; font-weight: 700; }
 .form-group input,
 .form-group select {
   width: 100%;
@@ -987,3 +988,10 @@
     padding: 16px;
   }
 }
+.select-wrapper { position: relative; }
+.select-wrapper::after { content: ''; position: absolute; top: 50%; right: 14px; width: 7px; height: 7px; border-right: 1.5px solid rgba(255,255,255,0.75); border-bottom: 1.5px solid rgba(255,255,255,0.75); transform: translateY(-65%) rotate(45deg); pointer-events: none; }
+.form-group select { appearance: none; padding-right: 40px; cursor: pointer; }
+.form-group select option { color: #fff; background: #1a171b; }
+.form-group input:hover,
+.form-group select:hover { border-color: rgba(203,106,240,0.45); background: rgba(255,255,255,0.06); }
+.form-group input[type="date"] { color-scheme: dark; }
