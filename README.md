@@ -15,8 +15,6 @@ Dayflow is a role-based Human Resource Management System (HRMS) that digitizes a
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [Roadmap](#roadmap)
-
 ---
 
 ## Overview
