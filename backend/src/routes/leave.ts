@@ -6,9 +6,7 @@ import { authenticate } from '../middleware/auth';
 const router = Router();
 router.use(authenticate);
 
-
-
-// Get leave balance for the logged‑in employee
+// Get leave balance for the logged-in employee
 router.get('/balance', async (req: Request, res: Response) => {
   const userId = (req as any).user?.sub;
   if (!userId) return res.status(401).json({ error: 'Unauthorized' });
@@ -20,7 +18,7 @@ router.get('/balance', async (req: Request, res: Response) => {
   res.json({ balances: profile.leaveBalances });
 });
 
-// Get leave request history for the logged‑in employee
+// Get leave request history for the logged-in employee
 router.get('/history', async (req: Request, res: Response) => {
   const userId = (req as any).user?.sub;
   if (!userId) return res.status(401).json({ error: 'Unauthorized' });
@@ -29,6 +27,18 @@ router.get('/history', async (req: Request, res: Response) => {
   const requests = await prisma.leaveRequest.findMany({
     where: { employeeId: profile.id },
     orderBy: { createdAt: 'desc' },
+    include: { employee: { select: { name: true, employeeCode: true } } },
+  });
+  res.json({ requests });
+});
+
+// Admin: get ALL employees' leave requests
+router.get('/all', requireAdmin, async (_req: Request, res: Response) => {
+  const requests = await prisma.leaveRequest.findMany({
+    orderBy: { createdAt: 'desc' },
+    include: {
+      employee: { select: { name: true, employeeCode: true } },
+    },
   });
   res.json({ requests });
 });
@@ -52,6 +62,7 @@ router.post('/request', async (req: Request, res: Response) => {
       remarks: remarks || '',
       status: 'PENDING',
     },
+    include: { employee: { select: { name: true, employeeCode: true } } },
   });
   res.status(201).json({ request: newReq });
 });
@@ -59,12 +70,12 @@ router.post('/request', async (req: Request, res: Response) => {
 // Admin approves a leave request
 router.patch('/:id/approve', requireAdmin, async (req: Request, res: Response) => {
   const { id } = req.params;
+  const reviewerId = (req as any).user?.sub;
   const updated = await prisma.leaveRequest.update({
     where: { id },
-    data: { status: 'APPROVED' },
+    data: { status: 'APPROVED', reviewerId },
     include: { employee: { include: { user: true } } },
   });
-  // Create in‑app notification for employee
   await prisma.notification.create({
     data: {
       userId: updated.employee.user.id,
@@ -77,9 +88,10 @@ router.patch('/:id/approve', requireAdmin, async (req: Request, res: Response) =
 // Admin rejects a leave request
 router.patch('/:id/reject', requireAdmin, async (req: Request, res: Response) => {
   const { id } = req.params;
+  const reviewerId = (req as any).user?.sub;
   const updated = await prisma.leaveRequest.update({
     where: { id },
-    data: { status: 'REJECTED' },
+    data: { status: 'REJECTED', reviewerId },
     include: { employee: { include: { user: true } } },
   });
   await prisma.notification.create({
