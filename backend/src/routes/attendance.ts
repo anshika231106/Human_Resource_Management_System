@@ -46,10 +46,15 @@ router.get('/', async (req: Request, res: Response) => {
   const mapped = records.map((rec) => {
     let workHours: string | null = null;
     let extraHours: string | null = null;
+    let computedStatus = rec.status;
 
     if (rec.checkIn && rec.checkOut) {
       const diffMs = rec.checkOut.getTime() - rec.checkIn.getTime();
       const totalHours = diffMs / (1000 * 60 * 60);
+
+      if (computedStatus === 'PRESENT' || computedStatus === 'HALF_DAY') {
+        computedStatus = totalHours < 5 ? 'HALF_DAY' : 'PRESENT';
+      }
       const hrs = Math.floor(totalHours);
       const mins = Math.round((totalHours - hrs) * 60);
       workHours = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
@@ -69,7 +74,7 @@ router.get('/', async (req: Request, res: Response) => {
       date: rec.date.toISOString().split('T')[0],
       checkIn: rec.checkIn?.toISOString() ?? null,
       checkOut: rec.checkOut?.toISOString() ?? null,
-      status: rec.status,
+      status: computedStatus,
       note: rec.note,
       workHours,
       extraHours,
@@ -139,10 +144,15 @@ router.get('/employee/:id', async (req: Request, res: Response) => {
   const mapped = records.map((rec) => {
     let workHours: string | null = null;
     let extraHours: string | null = null;
+    let computedStatus = rec.status;
 
     if (rec.checkIn && rec.checkOut) {
       const diffMs = rec.checkOut.getTime() - rec.checkIn.getTime();
       const totalHours = diffMs / (1000 * 60 * 60);
+
+      if (computedStatus === 'PRESENT' || computedStatus === 'HALF_DAY') {
+        computedStatus = totalHours < 5 ? 'HALF_DAY' : 'PRESENT';
+      }
       const hrs = Math.floor(totalHours);
       const mins = Math.round((totalHours - hrs) * 60);
       workHours = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
@@ -162,7 +172,7 @@ router.get('/employee/:id', async (req: Request, res: Response) => {
       date: rec.date.toISOString().split('T')[0],
       checkIn: rec.checkIn?.toISOString() ?? null,
       checkOut: rec.checkOut?.toISOString() ?? null,
-      status: rec.status,
+      status: computedStatus,
       note: rec.note,
       workHours,
       extraHours,

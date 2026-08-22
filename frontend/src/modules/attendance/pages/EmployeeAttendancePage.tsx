@@ -129,21 +129,21 @@ export const EmployeeAttendancePage = () => {
                         {formatDate(record.date)}
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium">
-                        <span className={record.checkIn ? "text-emerald-400" : "text-foreground/20"}>
-                          {formatTime(record.checkIn)}
+                        <span className={record.checkIn && record.status !== "LEAVE" ? "text-emerald-400" : "text-foreground/20"}>
+                          {record.status === "LEAVE" ? "—" : formatTime(record.checkIn)}
                         </span>
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium">
-                        <span className={record.checkOut ? "text-rose-400" : "text-foreground/20"}>
-                          {formatTime(record.checkOut)}
+                        <span className={record.checkOut && record.status !== "LEAVE" ? "text-rose-400" : "text-foreground/20"}>
+                          {record.status === "LEAVE" ? "—" : formatTime(record.checkOut)}
                         </span>
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium text-foreground/80">
-                        {record.workHours ?? "—"}
+                        {record.status === "LEAVE" ? "—" : (record.workHours ?? "—")}
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium">
-                        <span className={record.extraHours && record.extraHours !== "00:00" ? "text-amber-400 font-semibold" : "text-foreground/20"}>
-                          {record.extraHours ?? "00:00"}
+                        <span className={record.extraHours && record.extraHours !== "00:00" && record.status !== "LEAVE" ? "text-amber-400 font-semibold" : "text-foreground/20"}>
+                          {record.status === "LEAVE" ? "—" : (record.extraHours ?? "00:00")}
                         </span>
                       </td>
                       <td className="py-4 px-6 whitespace-nowrap text-right">
