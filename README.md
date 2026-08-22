@@ -99,14 +99,12 @@ Entries marked *Not applicable* denote capabilities that are superseded by broad
 
 ## Tech Stack
 
-The technology stack has not yet been finalized. This section will be updated once the selections are confirmed.
-
 | Layer | Technology |
 |---|---|
-| Frontend | To be confirmed |
-| Backend | To be confirmed |
-| Database | To be confirmed |
-| Authentication | To be confirmed |
+| Frontend | React, TypeScript, Vite, TailwindCSS v4, React Router |
+| Backend | Node.js, Express, TypeScript, Prisma ORM |
+| Database | PostgreSQL |
+| Authentication | JSON Web Tokens (JWT) |
 | Version Control | Git and GitHub |
 
 ---
@@ -115,9 +113,9 @@ The technology stack has not yet been finalized. This section will be updated on
 
 ### Prerequisites
 
-- Node.js (required version to be confirmed).
+- Node.js (v20+ recommended).
+- PostgreSQL database running locally or remotely.
 - Git.
-- Database and runtime dependencies, to be confirmed.
 
 ### Installation
 
@@ -126,13 +124,24 @@ The technology stack has not yet been finalized. This section will be updated on
 git clone https://github.com/AtharvaKanade/dayflow-hrms.git
 cd dayflow-hrms
 
-# Install dependencies
+# Configure Backend environment variables
+cd backend
+cp .env.example .env
+# Edit .env with your database credentials and JWT secret
+
+# Install backend dependencies
 npm install
 
-# Configure environment variables
-cp .env.example .env
+# Run database migrations and seed data
+npx prisma migrate dev
+npx prisma db seed
 
-# Start the development server
+# Start the backend server
+npm run dev
+
+# In a new terminal, configure and start the frontend
+cd ../frontend
+npm install
 npm run dev
 ```
 
@@ -140,7 +149,18 @@ npm run dev
 
 ## Project Structure
 
-A description of the repository layout will be documented here once the directory structure has been established.
+```text
+├── backend/                  # Express.js REST API
+│   ├── prisma/               # Database schema and seeders
+│   └── src/
+│       ├── routes/           # API Endpoints (auth, dashboard, attendance)
+│       └── ...
+└── frontend/                 # React frontend application
+    ├── src/
+    │   ├── modules/          # Feature-based architecture (auth, dashboard, attendance)
+    │   ├── styles/           # Global and component styles
+    │   └── ...
+```
 
 ---
 
