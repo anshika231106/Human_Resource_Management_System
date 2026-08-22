@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthHeader } from "../components/AuthHeader";
 import { AuthFooter } from "../components/AuthFooter";
 import { login, saveSession, AuthError } from "../services/authApi";
@@ -11,6 +12,7 @@ interface SignInPageProps {
 }
 
 export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPageProps) => {
+  const navigate = useNavigate();
   const [role, setRole] = useState<"admin" | "employee">("admin");
   const [showPassword, setShowPassword] = useState(false);
   const [loginId, setLoginId] = useState("");
@@ -33,18 +35,17 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError(null);
-    if (!validate()) return;
+    if (validate()) {
+      onSignInSuccess?.();
+      navigate("/dashboard");
+    }
+  };
 
-    setIsSubmitting(true);
-    try {
-      const session = await login({ loginId: loginId.trim(), password, role });
-      saveSession(session);
-      onSignInSuccess?.(session.user);
-    } catch (err) {
-      setFormError(err instanceof AuthError ? err.message : "Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+  const handleSignUpClick = () => {
+    if (onNavigateToSignUp) {
+      onNavigateToSignUp();
+    } else {
+      navigate("/signup");
     }
   };
 
@@ -163,9 +164,9 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
         {role === "admin" ? (
           <p className="signin-link">
             Don't have an account?
-            <button type="button" className="text-link-btn" onClick={onNavigateToSignUp}>
+            <Link to="/signup" className="text-link-btn" onClick={handleSignUpClick}>
               Sign Up
-            </button>
+            </Link>
           </p>
         ) : (
           <p className="signin-link employee-no-signup">

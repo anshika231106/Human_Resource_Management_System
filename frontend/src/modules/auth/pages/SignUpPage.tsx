@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthHeader } from "../components/AuthHeader";
 import { AuthFooter } from "../components/AuthFooter";
 import "../styles/Auth.css";
@@ -17,6 +18,7 @@ interface FormErrors {
 }
 
 export const SignUpPage = ({ onNavigateToSignIn }: SignUpPageProps) => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -31,7 +33,6 @@ export const SignUpPage = ({ onNavigateToSignIn }: SignUpPageProps) => {
 
   const updateField = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error on typing
     if (errors[field as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
@@ -72,8 +73,16 @@ export const SignUpPage = ({ onNavigateToSignIn }: SignUpPageProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // Registration success — navigate to sign in
       onNavigateToSignIn?.();
+      navigate("/signin");
+    }
+  };
+
+  const handleSignInClick = () => {
+    if (onNavigateToSignIn) {
+      onNavigateToSignIn();
+    } else {
+      navigate("/signin");
     }
   };
 
@@ -237,9 +246,9 @@ export const SignUpPage = ({ onNavigateToSignIn }: SignUpPageProps) => {
 
         <p className="signin-link">
           Already have an account?
-          <button type="button" className="text-link-btn" onClick={onNavigateToSignIn}>
+          <Link to="/signin" className="text-link-btn" onClick={handleSignInClick}>
             Sign In
-          </button>
+          </Link>
         </p>
       </div>
 

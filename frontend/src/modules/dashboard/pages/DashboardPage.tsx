@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { EmployeeCard } from "../components/EmployeeCard";
 import { mockEmployees } from "../data/mockEmployees";
@@ -9,6 +10,7 @@ interface DashboardPageProps {
 }
 
 export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
@@ -27,9 +29,17 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
     });
   };
 
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    } else {
+      navigate("/signin");
+    }
+  };
+
   return (
     <div className="dashboard-page">
-      <Navbar onLogout={onLogout} />
+      <Navbar onLogout={handleLogout} />
 
       <main className="dashboard-main">
         {/* Toolbar */}
