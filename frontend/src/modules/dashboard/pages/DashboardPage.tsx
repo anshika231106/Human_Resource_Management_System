@@ -39,6 +39,10 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
     }
   };
 
+  const handleViewEmployee = (id: string) => {
+    navigate(`/dashboard/employees/${id}`);
+  };
+
   return (
     <div className="dashboard-page">
       <Navbar onLogout={handleLogout} />
@@ -70,6 +74,7 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
               employee={emp}
               selected={selectedIds.has(emp.id)}
               onSelect={toggleSelect}
+              onView={handleViewEmployee}
             />
           ))}
         </div>

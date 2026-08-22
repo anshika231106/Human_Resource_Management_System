@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUpPage, SignInPage } from "./modules/auth";
 import { DashboardPage } from "./modules/dashboard";
+import { EmployeeProfilePage } from "./modules/dashboard/pages/EmployeeProfilePage";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/dashboard/employees/:employeeId" element={<EmployeeProfilePage />} />
       <Route path="*" element={<Navigate to="/signin" replace />} />
     </Routes>
   );

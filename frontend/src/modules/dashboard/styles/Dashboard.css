@@ -223,6 +223,7 @@
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -272,6 +273,14 @@
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.employee-avatar img,
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .employee-info {
@@ -335,123 +344,495 @@
   font-size: 15px;
 }
 
-/* ===== Modal Styles ===== */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
+/* ===== Employee Profile ===== */
+.employee-profile {
+  max-width: 1040px;
+}
+
+.profile-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.profile-back-btn:hover {
+  color: #cb6af0;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 0;
+  padding: 18px 10px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 0;
+}
+
+.profile-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #141414;
+}
+
+.profile-titlebar h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile-titlebar span {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-edit-btn {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #0a0a0a;
+  border-radius: 50%;
+  color: #0a0a0a;
+  background: #cb6af0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.profile-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease;
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.modal-content {
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 32px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.3s ease;
-}
-
-.modal-content h2 {
-  margin: 0 0 8px 0;
-  font-size: 20px;
+.profile-header h1 {
+  margin: 0;
   color: #fff;
+  font-size: 28px;
 }
 
-.modal-subtitle {
-  margin: 0 0 24px 0;
+.profile-role {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.45);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
 }
 
-.modal-form {
+.profile-header-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  gap: 12px 28px;
+  margin-left: auto;
+  min-width: 280px;
+}
+
+.profile-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 26px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.form-row {
+.profile-tabs button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0 0 13px;
+  color: rgba(255, 255, 255, 0.42);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.profile-tabs button.active {
+  color: #fff;
+  border-bottom: 2px solid #cb6af0;
+}
+
+.profile-tabs button:hover {
+  color: #fff;
+}
+
+.profile-sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 22px;
+}
+
+.profile-section {
+  padding: 20px;
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+}
+
+.profile-salary-section {
+  grid-column: 1 / -1;
+}
+
+.profile-section-heading {
   display: flex;
-  gap: 16px;
-}
-.form-row .form-group {
-  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
-.form-group label {
+.profile-section-heading h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 15px;
+}
+
+.profile-section-heading span {
+  color: #cb6af0;
+  font: 11px 'SF Mono', monospace;
+}
+
+.profile-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 12px;
+}
+
+.profile-detail {
+  min-width: 0;
+}
+
+.profile-detail span,
+.profile-document span {
   display: block;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  margin-bottom: 5px;
 }
 
-.form-group input,
-.form-group select {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 14px;
-}
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #cb6af0;
-  background: rgba(203, 106, 240, 0.05);
+.profile-detail strong {
+  display: block;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
-.modal-actions {
+.profile-documents {
+  display: grid;
+  gap: 10px;
+}
+
+.profile-document {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  margin-top: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.btn-cancel {
+.profile-document:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.profile-document strong {
+  display: block;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.profile-document button {
+  padding: 6px 10px;
+  color: #cb6af0;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
+  border: 1px solid rgba(203, 106, 240, 0.35);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 11px;
   cursor: pointer;
 }
-.btn-submit {
-  background: #cb6af0;
-  border: none;
+
+.profile-muted,
+.profile-not-found {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+}
+
+.profile-not-found {
+  text-align: center;
+}
+
+.profile-resume-section {
+  grid-column: 1 / -1;
+}
+
+.profile-personal-section {
+  grid-column: 1 / -1;
+}
+
+.profile-security-section {
+  grid-column: 1 / -1;
+}
+
+.resume-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.resume-columns h3 {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+}
+
+.resume-columns h3:not(:first-child) {
+  margin-top: 22px;
+}
+
+.profile-copy {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+}
+
+.profile-tags span {
+  padding: 5px 8px;
+  border: 1px solid rgba(203, 106, 240, 0.28);
+  border-radius: 5px;
+  color: #cb6af0;
+  font-size: 10px;
+}
+
+.security-divider {
+  height: 1px;
+  margin: 24px 0 20px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.security-heading {
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+}
+
+.security-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.security-form label {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 11px;
+}
+
+.security-form input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 38px;
+  margin-top: 7px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  outline: none;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  font: inherit;
+}
+
+.security-form input:focus {
+  border-color: rgba(203, 106, 240, 0.55);
+}
+
+.security-form input::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.security-save-btn {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid #cb6af0;
+  border-radius: 7px;
+  color: #cb6af0;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
   cursor: pointer;
+}
+
+.security-save-btn:hover {
+  color: #0a0a0a;
+  background: #cb6af0;
+}
+
+.salary-wage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding: 16px 0 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.salary-columns {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 30px;
+  padding-top: 20px;
+}
+
+.salary-columns h3 {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
   font-weight: 600;
 }
-.btn-submit:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-.modal-error {
-  background: rgba(255, 0, 0, 0.1);
-  color: #ff6b6b;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 16px;
+
+.salary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 48px;
+  align-items: start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.salary-row>div {
+  min-width: 0;
+}
+
+.salary-row strong {
+  display: block;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.salary-row span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.32);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.salary-row b {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.salary-row small {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.salary-row em {
+  color: #cb6af0;
+  font-size: 10px;
+  font-style: normal;
+  text-align: right;
+}
+
+.salary-subheading {
+  margin-top: 28px !important;
+}
+
+@media (max-width: 600px) {
+  .profile-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .profile-header h1 {
+    font-size: 22px;
+  }
+
+  .profile-header-details {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .profile-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-salary-section {
+    grid-column: auto;
+  }
+
+  .profile-resume-section {
+    grid-column: auto;
+  }
+
+  .profile-personal-section {
+    grid-column: auto;
+  }
+
+  .profile-security-section {
+    grid-column: auto;
+  }
+
+  .resume-columns {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .salary-wage-grid,
+  .salary-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 12px;
+  }
+
+  .salary-columns {
+    gap: 26px 0;
+  }
+
+  .salary-columns>div {
+    grid-column: 1 / -1;
+  }
+
+  .security-form {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
