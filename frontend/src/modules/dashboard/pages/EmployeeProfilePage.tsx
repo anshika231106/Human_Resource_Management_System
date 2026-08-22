@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { fetchEmployeeById } from "../services/dashboardApi";
@@ -82,7 +82,7 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
           <span aria-hidden="true">←</span> Employees
         </button>
 
-        <div className="profile-titlebar"><h1>My Profile</h1><span>Employee record</span></div>
+        <div className="profile-titlebar"><h1>Employee Profile</h1><span>Employee record</span></div>
         <header className="profile-header">
           <div className="profile-avatar-wrap">
             <div className="profile-avatar" style={{ background: `hsl(${hue}, 30%, 22%)`, color: `hsl(${hue}, 50%, 65%)` }}>
@@ -119,38 +119,38 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
           </section>}
 
           {activeTab === "personal" && <>
-          <section className="profile-section profile-personal-section" id="personal">
-            <div className="profile-section-heading"><h2>Private Info</h2><span>02</span></div>
-            <div className="profile-detail-grid">
-              <Detail label="Full name" value={employee.name} />
-              <Detail label="Employee code" value={employee.employeeCode} />
-              <Detail label="Email" value={employee.email} />
-              <Detail label="Phone" value={employee.phone} />
-              <Detail label="Address" value={employee.address} />
-            </div>
-          </section>
+            <section className="profile-section profile-personal-section" id="personal">
+              <div className="profile-section-heading"><h2>Private Info</h2><span>02</span></div>
+              <div className="profile-detail-grid">
+                <Detail label="Full name" value={employee.name} />
+                <Detail label="Employee code" value={employee.employeeCode} />
+                <Detail label="Email" value={employee.email} />
+                <Detail label="Phone" value={employee.phone} />
+                <Detail label="Address" value={employee.address} />
+              </div>
+            </section>
 
-          <section className="profile-section" id="job">
-            <div className="profile-section-heading"><h2>Job details</h2><span>03</span></div>
-            <div className="profile-detail-grid">
-              <Detail label="Job title" value={employee.role} />
-              <Detail label="Department" value={employee.department} />
-              <Detail label="Manager" value={employee.manager} />
-              <Detail label="Joining date" value={employee.joinDate} />
-              <Detail label="Status" value={employee.status || "Active"} />
-            </div>
-          </section>
-          <section className="profile-section" id="documents">
-            <div className="profile-section-heading"><h2>Documents</h2><span>04</span></div>
-            <div className="profile-documents">
-              {(employee.documents || []).length > 0 ? employee.documents?.map((document) => (
-                <div className="profile-document" key={document.name}>
-                  <div><strong>{document.name}</strong><span>Uploaded {document.uploadedAt}</span></div>
-                  <button type="button" aria-label={`View ${document.name}`}>View</button>
-                </div>
-              )) : <p className="profile-muted">No documents uploaded.</p>}
-            </div>
-          </section>
+            <section className="profile-section" id="job">
+              <div className="profile-section-heading"><h2>Job details</h2><span>03</span></div>
+              <div className="profile-detail-grid">
+                <Detail label="Job title" value={employee.role} />
+                <Detail label="Department" value={employee.department} />
+                <Detail label="Manager" value={employee.manager} />
+                <Detail label="Joining date" value={employee.joinDate} />
+                <Detail label="Status" value={employee.status || "Active"} />
+              </div>
+            </section>
+            <section className="profile-section" id="documents">
+              <div className="profile-section-heading"><h2>Documents</h2><span>04</span></div>
+              <div className="profile-documents">
+                {(employee.documents || []).length > 0 ? employee.documents?.map((document) => (
+                  <div className="profile-document" key={document.name}>
+                    <div><strong>{document.name}</strong><span>Uploaded {document.uploadedAt}</span></div>
+                    <button type="button" aria-label={`View ${document.name}`}>View</button>
+                  </div>
+                )) : <p className="profile-muted">No documents uploaded.</p>}
+              </div>
+            </section>
           </>}
 
           {activeTab === "salary" && <section className="profile-section profile-salary-section" id="salary">
