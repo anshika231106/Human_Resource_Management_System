@@ -12,7 +12,12 @@ router.get('/', async (req: Request, res: Response) => {
   const { date } = req.query;
 
   // Default to today if no date provided
-  const targetDate = date ? new Date(date as string) : new Date();
+  const targetDate = date
+    ? (() => {
+        const [year, month, day] = String(date).split('-').map(Number);
+        return new Date(year, month - 1, day);
+      })()
+    : new Date();
   targetDate.setHours(0, 0, 0, 0);
 
   if (isNaN(targetDate.getTime())) {

@@ -114,8 +114,8 @@ router.post('/employee', requireAdmin, async (req: Request, res: Response) => {
 // Admins get everyone; employees only ever get their own profile back.
 router.get('/', requireAuth, async (req: Request, res: Response) => {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     const requester = (req as any).user;
     const isAdmin = requester.role === 'ADMIN';
@@ -167,8 +167,8 @@ router.get('/', requireAuth, async (req: Request, res: Response) => {
 // Employees may only fetch their own profile; admins may fetch anyone's.
 router.get('/:id', requireAuth, async (req: Request, res: Response) => {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     const { id } = req.params;
     const requester = (req as any).user;

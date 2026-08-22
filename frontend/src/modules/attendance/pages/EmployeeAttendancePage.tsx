@@ -44,17 +44,17 @@ export const EmployeeAttendancePage = () => {
   const monthName = selectedMonth.toLocaleString("default", { month: "short", year: "numeric" });
   
   return (
-    <div className="attendance-page min-h-screen bg-[#0a0a0a] flex flex-col text-white">
+    <div className="attendance-page employee-attendance-page min-h-screen bg-[#0a0a0a] flex flex-col text-white">
       <Navbar onLogout={handleLogout} />
 
-      <main className="attendance-main flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        <div>
+      <main className="attendance-main employee-attendance-main flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="employee-attendance-heading">
             <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Attendance</h1>
             <p className="text-white/50 text-sm">View your monthly attendance records and statistics.</p>
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-4 bg-[#141414] p-4 rounded-2xl border border-white/10">
+        <div className="employee-attendance-toolbar flex flex-wrap items-center gap-4 bg-[#141414] p-4 rounded-2xl border border-white/10">
           <div className="flex items-center gap-2">
             <button
               onClick={goPrevMonth}
@@ -79,16 +79,16 @@ export const EmployeeAttendancePage = () => {
 
           <div className="hidden sm:block w-px h-8 bg-white/10 mx-2" />
 
-          <div className="flex gap-4 flex-1">
-            <div className="flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
+          <div className="employee-attendance-stats flex gap-4 flex-1">
+            <div className="employee-attendance-stat flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
               <span className="text-xs text-white/50 uppercase text-center mb-1">Count of days present</span>
               <span className="text-lg font-bold text-emerald-400">{presentCount}</span>
             </div>
-            <div className="flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
+            <div className="employee-attendance-stat flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
               <span className="text-xs text-white/50 uppercase text-center mb-1">Leaves count</span>
               <span className="text-lg font-bold text-sky-400">{leaveCount}</span>
             </div>
-            <div className="flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
+            <div className="employee-attendance-stat flex-1 px-4 py-2 border border-white/10 rounded-lg bg-white/5 flex flex-col justify-center items-center">
               <span className="text-xs text-white/50 uppercase text-center mb-1">Total working days</span>
               <span className="text-lg font-bold text-white/90">{totalWorkingDays}</span>
             </div>
@@ -96,7 +96,7 @@ export const EmployeeAttendancePage = () => {
         </div>
 
         {/* Table */}
-        <div className="attendance-table-shell w-full overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
+        <div className="attendance-table-shell employee-attendance-table w-full overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
               <thead>

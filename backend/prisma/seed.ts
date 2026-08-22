@@ -1,5 +1,6 @@
 import { PrismaClient, Role, LeaveType, LeaveStatus, AttendanceStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import 'dotenv/config';
 
 import { PrismaPg } from '@prisma/adapter-pg';
 
@@ -97,18 +98,27 @@ async function main() {
     for (let d = 0; d < 60; d++) {
       const date = new Date();
       date.setDate(date.getDate() - d);
-      // skip weekends
-      if (date.getDay() === 0 || date.getDay() === 6) continue;
+      // Keep two leave records visible for the current selected date, even when it is a weekend.
+      if ((date.getDay() === 0 || date.getDay() === 6) && !(d === 0 && i < 2)) continue;
 
       const rand = Math.random();
-      const status = rand < 0.85 ? AttendanceStatus.PRESENT : rand < 0.92 ? AttendanceStatus.HALF_DAY : rand < 0.97 ? AttendanceStatus.ABSENT : AttendanceStatus.LEAVE;
+      // Keep leave visible in the seeded attendance screen for the first two employees.
+      const status = d === 0 && i < 2
+        ? AttendanceStatus.LEAVE
+        : rand < 0.85
+        ? AttendanceStatus.PRESENT
+        : rand < 0.92
+        ? AttendanceStatus.HALF_DAY
+        : rand < 0.97
+        ? AttendanceStatus.ABSENT
+        : AttendanceStatus.LEAVE;
 
       await prisma.attendanceRecord.create({
         data: {
           employeeId: user.profile!.id,
           date,
-          checkIn: status === AttendanceStatus.ABSENT ? null : new Date(date.setHours(9, Math.floor(Math.random() * 30), 0)),
-          checkOut: status === AttendanceStatus.ABSENT ? null : new Date(date.setHours(18, Math.floor(Math.random() * 30), 0)),
+          checkIn: status === AttendanceStatus.ABSENT || status === AttendanceStatus.LEAVE ? null : new Date(date.setHours(9, Math.floor(Math.random() * 30), 0)),
+          checkOut: status === AttendanceStatus.ABSENT || status === AttendanceStatus.LEAVE ? null : new Date(date.setHours(18, Math.floor(Math.random() * 30), 0)),
           status,
         },
       });
