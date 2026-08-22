@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
-import { mockEmployees } from "../data/mockEmployees";
+import { fetchEmployeeById } from "../services/dashboardApi";
 import type { Employee } from "../types/dashboard.types";
 import "../styles/Dashboard.css";
 
@@ -18,7 +18,33 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
   const navigate = useNavigate();
   const { employeeId } = useParams();
   const [activeTab, setActiveTab] = useState<"resume" | "personal" | "salary" | "security">("resume");
-  const employee = mockEmployees.find((item) => item.id === employeeId);
+  const [employee, setEmployee] = useState<Employee | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!employeeId) return;
+    fetchEmployeeById(employeeId)
+      .then((data) => {
+        setEmployee(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [employeeId]);
+
+  if (loading) {
+    return (
+      <div className="dashboard-page">
+        <Navbar onLogout={onLogout} />
+        <main className="dashboard-main profile-not-found">
+          <p>Loading employee profile from database...</p>
+        </main>
+      </div>
+    );
+  }
 
   if (!employee) {
     return (
