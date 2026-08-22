@@ -1,16 +1,33 @@
+import { useNavigate, useLocation } from "react-router-dom";
+
 interface NavbarProps {
   onLogout?: () => void;
 }
 
+const navTabs = [
+  { label: "Employees", path: "/dashboard" },
+  { label: "Attendance", path: "/attendance" },
+  { label: "Time Off", path: "/timeoff" },
+];
+
 export const Navbar = ({ onLogout }: NavbarProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <nav className="dashboard-navbar">
       <div className="navbar-left">
         <span className="navbar-brand">StaffControl</span>
         <div className="navbar-tabs">
-          <button className="nav-tab active">Employees</button>
-          <button className="nav-tab">Attendance</button>
-          <button className="nav-tab">Time Off</button>
+          {navTabs.map((tab) => (
+            <button
+              key={tab.path}
+              className={`nav-tab ${location.pathname === tab.path ? "active" : ""}`}
+              onClick={() => navigate(tab.path)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
       <div className="navbar-right">
