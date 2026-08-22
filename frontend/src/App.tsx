@@ -1,11 +1,24 @@
 import { useState } from "react";
-import { SignUpPage, SignInPage } from "./modules/auth";
+import { SignUpPage, SignInPage, loadSession, clearSession, type AuthUser } from "./modules/auth";
 import { DashboardPage } from "./modules/dashboard";
 
 type View = "signup" | "signin" | "dashboard";
 
 function App() {
-  const [currentView, setCurrentView] = useState<View>("signin");
+  const existingSession = loadSession();
+  const [currentView, setCurrentView] = useState<View>(existingSession ? "dashboard" : "signin");
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(existingSession?.user ?? null);
+
+  const handleSignInSuccess = (user: AuthUser) => {
+    setCurrentUser(user);
+    setCurrentView("dashboard");
+  };
+
+  const handleLogout = () => {
+    clearSession();
+    setCurrentUser(null);
+    setCurrentView("signin");
+  };
 
   return (
     <div>
@@ -15,11 +28,11 @@ function App() {
       {currentView === "signin" && (
         <SignInPage
           onNavigateToSignUp={() => setCurrentView("signup")}
-          onSignInSuccess={() => setCurrentView("dashboard")}
+          onSignInSuccess={handleSignInSuccess}
         />
       )}
-      {currentView === "dashboard" && (
-        <DashboardPage onLogout={() => setCurrentView("signin")} />
+      {currentView === "dashboard" && currentUser && (
+        <DashboardPage onLogout={handleLogout} />
       )}
     </div>
   );

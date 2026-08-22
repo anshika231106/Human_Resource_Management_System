@@ -1,26 +1,28 @@
 import { useState } from "react";
 import { AuthHeader } from "../components/AuthHeader";
 import { AuthFooter } from "../components/AuthFooter";
+import { login, saveSession, AuthError } from "../services/authApi";
+import type { AuthUser } from "../types/auth.types";
 import "../styles/Auth.css";
 
 interface SignInPageProps {
   onNavigateToSignUp?: () => void;
-  onSignInSuccess?: () => void;
+  onSignInSuccess?: (user: AuthUser) => void;
 }
 
 export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPageProps) => {
   const [role, setRole] = useState<"admin" | "employee">("admin");
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ loginId?: string; password?: string }>({});
+  const [formError, setFormError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = (): boolean => {
-    const newErrors: { email?: string; password?: string } = {};
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Enter a valid email";
+    const newErrors: { loginId?: string; password?: string } = {};
+    if (!loginId.trim()) {
+      newErrors.loginId = "Login ID is required";
     }
     if (!password) {
       newErrors.password = "Password is required";
@@ -29,10 +31,20 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      onSignInSuccess?.();
+    setFormError(null);
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    try {
+      const session = await login({ loginId: loginId.trim(), password, role });
+      saveSession(session);
+      onSignInSuccess?.(session.user);
+    } catch (err) {
+      setFormError(err instanceof AuthError ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -74,24 +86,24 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
         />
 
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
-          {/* Email */}
-          <div className={`floating-group${errors.email ? " has-error" : ""}`}>
+          {/* Login ID */}
+          <div className={`floating-group${errors.loginId ? " has-error" : ""}`}>
             <input
-              id="signin-email"
-              type="email"
+              id="signin-loginid"
+              type="text"
               placeholder=" "
-              autoComplete="email"
+              autoComplete="username"
               required
-              value={email}
+              value={loginId}
               onChange={(e) => {
-                setEmail(e.target.value);
-                if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+                setLoginId(e.target.value);
+                if (errors.loginId) setErrors((p) => ({ ...p, loginId: undefined }));
               }}
             />
-            <label htmlFor="signin-email">
-              {role === "admin" ? "Admin Email Address" : "Employee Email Address"}
+            <label htmlFor="signin-loginid">
+              {role === "admin" ? "Admin Login ID" : "Employee Login ID"}
             </label>
-            {errors.email && <span className="field-error">{errors.email}</span>}
+            {errors.loginId && <span className="field-error">{errors.loginId}</span>}
           </div>
 
           {/* Password */}
@@ -136,9 +148,11 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
             <a href="#" className="forgot-password-link">Forgot password?</a>
           </div>
 
+          {formError && <span className="form-error">{formError}</span>}
+
           {/* Submit */}
-          <button type="submit" className="signup-btn">
-            Sign In as {role === "admin" ? "Admin" : "Employee"}
+          <button type="submit" className="signup-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Signing In…" : `Sign In as ${role === "admin" ? "Admin" : "Employee"}`}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />

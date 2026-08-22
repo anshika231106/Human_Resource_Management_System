@@ -12,3 +12,25 @@ export interface SignInFormData {
   password: string;
   rememberMe?: boolean;
 }
+
+export interface LoginPayload {
+  loginId: string;
+  password: string;
+  role: "admin" | "employee";
+}
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  role: "ADMIN" | "EMPLOYEE";
+  mustChangePassword: boolean;
+  name: string | null;
+  employeeCode: string | null;
+  jobTitle: string | null;
+  department: string | null;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: AuthUser;
+}
