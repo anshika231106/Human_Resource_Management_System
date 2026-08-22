@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { EmployeeCard } from "../components/EmployeeCard";
+import { CreateEmployeeModal } from "../components/CreateEmployeeModal";
 import { mockEmployees } from "../data/mockEmployees";
 import "../styles/Dashboard.css";
 
@@ -13,6 +14,7 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredEmployees = mockEmployees.filter(
     (emp) =>
@@ -44,7 +46,7 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
       <main className="dashboard-main">
         {/* Toolbar */}
         <div className="dashboard-toolbar">
-          <button className="new-employee-btn">NEW</button>
+          <button className="new-employee-btn" onClick={() => setIsModalOpen(true)}>NEW</button>
           <div className="search-wrapper">
             <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
@@ -78,6 +80,16 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
           </div>
         )}
       </main>
+
+      <CreateEmployeeModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onSuccess={() => {
+          // Temporarily just alert success, in real app we'd refresh list
+          alert("Employee successfully created & credentials emailed!");
+          setIsModalOpen(false);
+        }} 
+      />
     </div>
   );
 };
