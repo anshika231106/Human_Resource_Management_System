@@ -12,7 +12,6 @@ Dayflow is a role-based HRMS that digitizes and streamlines core HR operations �
 - [Features](#features)
 - [User Roles](#user-roles)
 - [Tech Stack](#tech-stack)
-- [Project Guidelines](#project-guidelines)
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
@@ -91,4 +90,38 @@ Dayflow provides a single platform where employees can manage their own profile,
 | Auth | TBD |
 | Version Control | Git & GitHub |
  
+---
+
+## Getting Started
+ 
+### Prerequisites
+- Node.js (version TBD)
+- Git
+- (Database/runtime dependencies — TBD)
+### Installation
+ 
+```bash
+# Clone the repository
+git clone https://github.com/AtharvaKanade/dayflow-hrms.git
+cd dayflow-hrms
+ 
+# Install dependencies
+npm install
+ 
+# Set up environment variables
+cp .env.example .env
+ 
+# Run the development server
+npm run dev
+```
+ 
+---
+## Project Structure
+---
+## Contributing
+ 
+1. Create a feature branch off `main`: `git checkout -b feature/<name>`
+2. Commit with clear, descriptive messages
+3. Push and open a pull request for review
+4. Every team member is expected to commit and manage the repo directly — no single point of ownership
 ---
