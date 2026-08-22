@@ -24,15 +24,15 @@ export const AttendanceToolbar = ({
   const dateInputValue = selectedDate.toISOString().split("T")[0];
 
   return (
-    <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 py-2">
+    <div className="attendance-toolbar flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 py-2">
       {/* Left section: Title + Search */}
-      <div className="flex flex-1 items-center gap-6">
+      <div className="attendance-toolbar-main flex flex-1 items-center gap-6">
         <h1 className="text-2xl font-bold text-white tracking-tight shrink-0">
           Attendance
         </h1>
 
         {/* Searchbar */}
-        <div className="relative flex-1 max-w-sm">
+        <div className="attendance-search relative flex-1 max-w-sm">
           <svg
             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none"
             viewBox="0 0 24 24"
@@ -56,7 +56,7 @@ export const AttendanceToolbar = ({
       </div>
 
       {/* Right section: Controls (< > Date v Day/Week) */}
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="attendance-controls flex items-center gap-3 shrink-0">
         {/* Navigation Buttons: < and > */}
         <div className="flex items-center gap-1 bg-[#141414] border border-white/10 rounded-xl p-1">
           <button

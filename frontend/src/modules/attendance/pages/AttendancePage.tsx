@@ -5,6 +5,7 @@ import { AttendanceToolbar } from "../components/AttendanceToolbar";
 import { AttendanceDateHeader } from "../components/AttendanceDateHeader";
 import { AttendanceTable } from "../components/AttendanceTable";
 import { AttendanceEmptyState } from "../components/AttendanceEmptyState";
+import "../styles/Attendance.css";
 
 export const AttendancePage = () => {
   const navigate = useNavigate();
@@ -91,10 +92,10 @@ export const AttendancePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col text-white">
+    <div className="attendance-page min-h-screen bg-[#0a0a0a] flex flex-col text-white">
       <Navbar onLogout={handleLogout} />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="attendance-main flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Top Toolbar */}
         <AttendanceToolbar
           searchQuery={searchQuery}
@@ -111,11 +112,11 @@ export const AttendancePage = () => {
         <AttendanceDateHeader date={selectedDate} />
 
         {/* Summary Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="attendance-stats grid grid-cols-2 lg:grid-cols-4 gap-4">
           {statCards.map((card) => (
             <div
               key={card.label}
-              className={`rounded-2xl border p-5 ${card.bg} ${card.border} flex items-center justify-between shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-[1.01]`}
+              className={`attendance-stat-card rounded-2xl border p-5 ${card.bg} ${card.border} flex items-center justify-between shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-[1.01]`}
             >
               <div>
                 <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">

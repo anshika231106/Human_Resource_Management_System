@@ -29,13 +29,13 @@ function nameToHue(name: string): number {
 
 export const AttendanceTable = ({ records }: AttendanceTableProps) => {
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
+    <div className="attendance-table-shell w-full overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
           {/* Header */}
           <thead>
-            <tr className="border-b border-white/10 bg-white/[0.02]">
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider min-w-[240px]">
+            <tr className="border-b border-white/10 bg-white/2">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider min-w-60">
                 Emp
               </th>
               <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider">
@@ -57,7 +57,7 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
           </thead>
 
           {/* Body */}
-          <tbody className="divide-y divide-white/[0.06]">
+          <tbody className="divide-y divide-white/6">
             {records.map((record) => {
               const hue = nameToHue(record.employee.name);
               const initials = getInitials(record.employee.name);
@@ -65,7 +65,7 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
               return (
                 <tr
                   key={record.id}
-                  className="group hover:bg-white/[0.03] transition-colors duration-150"
+                  className="group hover:bg-white/3 transition-colors duration-150"
                 >
                   {/* Employee Info */}
                   <td className="py-4 px-6 whitespace-nowrap">

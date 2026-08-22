@@ -19,5 +19,9 @@ export async function fetchAttendance(date: string): Promise<AttendanceRecord[]>
     }
   );
 
+  if (!Array.isArray(data)) {
+    throw new Error("Attendance API returned an invalid response");
+  }
+
   return data;
 }

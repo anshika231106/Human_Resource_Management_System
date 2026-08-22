@@ -10,8 +10,8 @@ export const AttendanceDateHeader = ({ date }: AttendanceDateHeaderProps) => {
   });
 
   return (
-    <div className="flex items-center justify-center my-4">
-      <div className="flex items-center gap-3 px-6 py-2 rounded-full bg-white/[0.03] border border-white/[0.07] backdrop-blur-md">
+    <div className="attendance-date-header flex items-center justify-center my-4">
+      <div className="flex items-center gap-3 px-6 py-2 rounded-full bg-white/3 border border-white/7 backdrop-blur-md">
         <svg
           className="w-4 h-4 text-[#cb6af0]"
           viewBox="0 0 24 24"
