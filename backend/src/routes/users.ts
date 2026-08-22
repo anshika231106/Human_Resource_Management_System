@@ -10,7 +10,7 @@ const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 // Basic admin auth middleware
-const requireAdmin = (req: Request, res: Response, next: Function) => {
+export const requireAdmin = (req: Request, res: Response, next: Function) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
   
