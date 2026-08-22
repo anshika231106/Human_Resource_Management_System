@@ -11,7 +11,6 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 // Requires a valid JWT for any signed-in user (admin or employee)
 const requireAuth = (req: Request, res: Response, next: Function) => {
->>>>>>> Stashed changes
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -26,7 +25,7 @@ const requireAuth = (req: Request, res: Response, next: Function) => {
 };
 
 // Requires a valid JWT belonging to an admin
-const requireAdmin = (req: Request, res: Response, next: Function) => {
+export const requireAdmin = (req: Request, res: Response, next: Function) => {
   requireAuth(req, res, () => {
     if ((req as any).user.role !== 'ADMIN') return res.status(403).json({ error: 'Forbidden. Admin only.' });
     next();
@@ -115,13 +114,11 @@ router.post('/employee', requireAdmin, async (req: Request, res: Response) => {
 // Admins get everyone; employees only ever get their own profile back.
 router.get('/', requireAuth, async (req: Request, res: Response) => {
   try {
-<<<<<<< Updated upstream
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-=======
+
     const requester = (req as any).user;
     const isAdmin = requester.role === 'ADMIN';
->>>>>>> Stashed changes
 
     const profiles = await prisma.employeeProfile.findMany({
       where: isAdmin ? undefined : { userId: requester.sub },
