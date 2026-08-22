@@ -1,6 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --color-background: var(--bg-background);
+  --color-surface: var(--bg-surface);
+  --color-foreground: var(--text-foreground);
+  --color-border-soft: var(--border-soft);
+}
+
+@layer base {
+  :root {
+    --bg-background: #0a0a0a;
+    --bg-surface: #141414;
+    --text-foreground: #ffffff;
+    --border-soft: rgba(255, 255, 255, 0.1);
+  }
+
+  .light {
+    --bg-background: #f9fafb;
+    --bg-surface: #ffffff;
+    --text-foreground: #111827;
+    --border-soft: rgba(0, 0, 0, 0.1);
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -12,8 +35,8 @@
 html, body, #root {
   height: 100%;
   width: 100%;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--bg-background);
+  color: var(--text-foreground);
 }
 
 body {

@@ -57,7 +57,7 @@ export const LeaveRequestModal = ({ isOpen, onClose, onSubmit }: Props) => {
               value={remarks}
               onChange={(e) => setRemarks(e.target.value)}
               rows={2}
-              style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', color: '#fff', fontSize: '14px', resize: 'vertical' }}
+              style={{ width: '100%', padding: '10px 14px', background: 'color-mix(in srgb, var(--text-foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--text-foreground) 12%, transparent)', borderRadius: '8px', color: 'var(--text-foreground)', fontSize: '14px', resize: 'vertical' }}
             />
           </div>
           <div className="modal-actions">

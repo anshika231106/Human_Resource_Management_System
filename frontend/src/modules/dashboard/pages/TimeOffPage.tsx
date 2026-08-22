@@ -123,7 +123,7 @@ const AdminView = () => {
       {error && <div className="modal-error" style={{ marginBottom: 16 }}>{error}</div>}
 
       {loading ? (
-        <p style={{ color: 'rgba(255,255,255,0.4)', padding: '40px 0', textAlign: 'center' }}>Loading…</p>
+        <p style={{ color: 'color-mix(in srgb, var(--text-foreground) 40%, transparent)', padding: '40px 0', textAlign: 'center' }}>Loading…</p>
       ) : (
         <div className="timeoff-table-wrap">
           <table className="timeoff-table">
@@ -139,12 +139,12 @@ const AdminView = () => {
             </thead>
             <tbody>
               {filtered.length === 0 ? (
-                <tr><td colSpan={6} style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', padding: '40px 0' }}>No requests found.</td></tr>
+                <tr><td colSpan={6} style={{ textAlign: 'center', color: 'color-mix(in srgb, var(--text-foreground) 35%, transparent)', padding: '40px 0' }}>No requests found.</td></tr>
               ) : filtered.map(r => (
                 <tr key={r.id}>
                   <td>
-                    <div style={{ fontWeight: 500, color: '#fff' }}>{r.employee?.name ?? '—'}</div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '2px' }}>{r.employee?.employeeCode}</div>
+                    <div style={{ fontWeight: 500, color: 'var(--text-foreground)' }}>{r.employee?.name ?? '—'}</div>
+                    <div style={{ fontSize: '11px', color: 'color-mix(in srgb, var(--text-foreground) 35%, transparent)', marginTop: '2px' }}>{r.employee?.employeeCode}</div>
                   </td>
                   <td>{new Date(r.startDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                   <td>{new Date(r.endDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
@@ -157,7 +157,7 @@ const AdminView = () => {
                         <button className="btn-reject" onClick={() => handleReject(r.id)}>Reject</button>
                       </div>
                     ) : (
-                      <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '12px' }}>—</span>
+                      <span style={{ color: 'color-mix(in srgb, var(--text-foreground) 25%, transparent)', fontSize: '12px' }}>—</span>
                     )}
                   </td>
                 </tr>
@@ -220,7 +220,7 @@ const EmployeeView = () => {
       {error && <div className="modal-error" style={{ marginBottom: 16 }}>{error}</div>}
 
       {loading ? (
-        <p style={{ color: 'rgba(255,255,255,0.4)' }}>Loading…</p>
+        <p style={{ color: 'color-mix(in srgb, var(--text-foreground) 40%, transparent)' }}>Loading…</p>
       ) : (
         <>
           {/* Balance cards */}
@@ -241,7 +241,7 @@ const EmployeeView = () => {
           {/* My requests table */}
           {requests.length > 0 && (
             <div className="timeoff-table-wrap" style={{ marginTop: '20px' }}>
-              <h3 style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', fontWeight: 500, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>My Requests</h3>
+              <h3 style={{ color: 'color-mix(in srgb, var(--text-foreground) 60%, transparent)', fontSize: '13px', fontWeight: 500, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>My Requests</h3>
               <table className="timeoff-table">
                 <thead>
                   <tr>
@@ -266,7 +266,7 @@ const EmployeeView = () => {
           )}
 
           {requests.length === 0 && (
-            <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.3)', padding: '40px 0', fontSize: '14px' }}>
+            <div style={{ textAlign: 'center', color: 'color-mix(in srgb, var(--text-foreground) 30%, transparent)', padding: '40px 0', fontSize: '14px' }}>
               No time-off requests yet. Click <strong style={{ color: '#cb6af0' }}>+ New</strong> to submit one.
             </div>
           )}

@@ -1,20 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { clearSession, loadSession } from "../../auth/services/authApi";
+import { useTheme } from "../hooks/useTheme";
 
 interface NavbarProps {
   onLogout?: () => void;
 }
 
-const navTabs = [
-  { label: "Employees", path: "/dashboard" },
-  { label: "Attendance", path: "/attendance" },
-  { label: "Time Off", path: "/timeoff" },
-];
+
 
 export const Navbar = ({ onLogout }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
+
+  const session = loadSession();
+  const isAdmin = session?.user?.role === "ADMIN";
+  const userId = session?.user?.id;
+
+  const dynamicNavTabs = [
+    {
+      label: isAdmin ? "Employees" : "My profile",
+      path: isAdmin ? "/dashboard" : `/dashboard/employees/${userId}`,
+    },
+    { label: "Attendance", path: "/attendance" },
+    { label: "Time Off", path: "/timeoff" },
+  ];
 
   const [isCheckedIn, setIsCheckedIn] = useState<boolean>(() => {
     return localStorage.getItem("dayflow.is_checked_in") === "true";
@@ -83,10 +94,10 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
       <div className="navbar-left">
         <span className="navbar-brand">StaffControl</span>
         <div className="navbar-tabs">
-          {navTabs.map((tab) => (
+          {dynamicNavTabs.map((tab) => (
             <button
               key={tab.path}
-              className={`nav-tab ${location.pathname === tab.path ? "active" : ""}`}
+              className={`nav-tab ${location.pathname.startsWith(tab.path) ? "active" : ""}`}
               onClick={() => navigate(tab.path)}
             >
               {tab.label}
@@ -95,13 +106,39 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
         </div>
       </div>
 
-      <div className="navbar-right">
+      <div className="navbar-right flex items-center gap-3">
+        {/* Theme Toggle Widget */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="flex items-center justify-center w-8 h-8 rounded-xl bg-foreground/5 border border-foreground/10 hover:bg-foreground/8 transition-all cursor-pointer text-foreground/80"
+          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {theme === "dark" ? (
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          )}
+        </button>
+
         {/* Check-In / Check-Out Widget */}
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="attendance-action-trigger flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-all cursor-pointer text-xs font-medium text-white/80"
+            className="attendance-action-trigger flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-foreground/5 border border-foreground/10 hover:bg-foreground/8 transition-all cursor-pointer text-xs font-medium text-foreground/80"
             title={isCheckedIn ? "Click to Check Out" : "Click to Check In"}
           >
             <span
@@ -116,11 +153,11 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
 
           {/* Popover Menu */}
           {isOpen && (
-            <div className="attendance-action-popover absolute right-0 mt-2 w-64 p-4 rounded-2xl bg-[#141414] border border-white/10 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+            <div className="attendance-action-popover absolute right-0 mt-2 w-64 p-4 rounded-2xl bg-surface border border-foreground/10 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-foreground/10">
                 <div>
-                  <h4 className="text-sm font-semibold text-white">Attendance Action</h4>
-                  <p className="text-xs text-white/40 mt-0.5">
+                  <h4 className="text-sm font-semibold text-foreground">Attendance Action</h4>
+                  <p className="text-xs text-foreground/40 mt-0.5">
                     {isCheckedIn ? `Checked in at ${checkInTime}` : "You are currently offline"}
                   </p>
                 </div>

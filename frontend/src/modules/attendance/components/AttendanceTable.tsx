@@ -29,35 +29,35 @@ function nameToHue(name: string): number {
 
 export const AttendanceTable = ({ records }: AttendanceTableProps) => {
   return (
-    <div className="attendance-table-shell w-full overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
+    <div className="attendance-table-shell w-full overflow-hidden rounded-2xl border border-foreground/10 bg-surface shadow-xl">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
           {/* Header */}
           <thead>
-            <tr className="border-b border-white/10 bg-white/2">
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider min-w-60">
+            <tr className="border-b border-foreground/10 bg-foreground/2">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider min-w-60">
                 Emp
               </th>
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider">
                 Check In
               </th>
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider">
                 Check Out
               </th>
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider">
                 Work Hours
               </th>
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider">
                 Extra hours
               </th>
-              <th scope="col" className="py-4 px-6 font-semibold text-xs text-white/50 uppercase tracking-wider text-right">
+              <th scope="col" className="py-4 px-6 font-semibold text-xs text-foreground/50 uppercase tracking-wider text-right">
                 Status
               </th>
             </tr>
           </thead>
 
           {/* Body */}
-          <tbody className="divide-y divide-white/6">
+          <tbody className="divide-y divide-foreground/6">
             {records.map((record) => {
               const hue = nameToHue(record.employee.name);
               const initials = getInitials(record.employee.name);
@@ -65,7 +65,7 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
               return (
                 <tr
                   key={record.id}
-                  className="group hover:bg-white/3 transition-colors duration-150"
+                  className="group hover:bg-foreground/3 transition-colors duration-150"
                 >
                   {/* Employee Info */}
                   <td className="py-4 px-6 whitespace-nowrap">
@@ -81,10 +81,10 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
                         {initials}
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="font-semibold text-white group-hover:text-[#cb6af0] transition-colors text-sm truncate">
+                        <span className="font-semibold text-foreground group-hover:text-[#cb6af0] transition-colors text-sm truncate">
                           {record.employee.name}
                         </span>
-                        <span className="text-xs text-white/40 truncate">
+                        <span className="text-xs text-foreground/40 truncate">
                           {record.employee.department} · {record.employee.jobTitle}
                         </span>
                       </div>
@@ -93,20 +93,20 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
 
                   {/* Check In */}
                   <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium">
-                    <span className={record.checkIn ? "text-emerald-400" : "text-white/20"}>
+                    <span className={record.checkIn ? "text-emerald-400" : "text-foreground/20"}>
                       {formatTime(record.checkIn)}
                     </span>
                   </td>
 
                   {/* Check Out */}
                   <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium">
-                    <span className={record.checkOut ? "text-rose-400" : "text-white/20"}>
+                    <span className={record.checkOut ? "text-rose-400" : "text-foreground/20"}>
                       {formatTime(record.checkOut)}
                     </span>
                   </td>
 
                   {/* Work Hours */}
-                  <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium text-white/80">
+                  <td className="py-4 px-6 whitespace-nowrap font-mono text-sm font-medium text-foreground/80">
                     {record.workHours ?? "—"}
                   </td>
 
@@ -116,7 +116,7 @@ export const AttendanceTable = ({ records }: AttendanceTableProps) => {
                       className={
                         record.extraHours && record.extraHours !== "00:00"
                           ? "text-amber-400 font-semibold"
-                          : "text-white/20"
+                          : "text-foreground/20"
                       }
                     >
                       {record.extraHours ?? "00:00"}

@@ -27,14 +27,14 @@ export const AttendanceToolbar = ({
     <div className="attendance-toolbar flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 py-2">
       {/* Left section: Title + Search */}
       <div className="attendance-toolbar-main flex flex-1 items-center gap-6">
-        <h1 className="text-2xl font-bold text-white tracking-tight shrink-0">
+        <h1 className="text-2xl font-bold text-foreground tracking-tight shrink-0">
           Attendance
         </h1>
 
         {/* Searchbar */}
         <div className="attendance-search relative flex-1 max-w-sm">
           <svg
-            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none"
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30 pointer-events-none"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -50,7 +50,7 @@ export const AttendanceToolbar = ({
             placeholder="Searchbar"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full h-10 pl-10 pr-4 rounded-xl bg-[#141414] border border-white/10 text-white text-sm placeholder:text-white/30 outline-none transition-all duration-200 focus:border-[#cb6af0] focus:ring-2 focus:ring-[#cb6af0]/20"
+            className="w-full h-10 pl-10 pr-4 rounded-xl bg-surface border border-foreground/10 text-foreground text-sm placeholder:text-foreground/30 outline-none transition-all duration-200 focus:border-[#cb6af0] focus:ring-2 focus:ring-[#cb6af0]/20"
           />
         </div>
       </div>
@@ -58,11 +58,11 @@ export const AttendanceToolbar = ({
       {/* Right section: Controls (< > Date v Day/Week) */}
       <div className="attendance-controls flex items-center gap-3 shrink-0">
         {/* Navigation Buttons: < and > */}
-        <div className="flex items-center gap-1 bg-[#141414] border border-white/10 rounded-xl p-1">
+        <div className="flex items-center gap-1 bg-surface border border-foreground/10 rounded-xl p-1">
           <button
             type="button"
             onClick={onPrev}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-foreground/60 hover:text-foreground hover:bg-foreground/10 transition-colors cursor-pointer"
             title="Previous Day"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -72,7 +72,7 @@ export const AttendanceToolbar = ({
           <button
             type="button"
             onClick={onNext}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-foreground/60 hover:text-foreground hover:bg-foreground/10 transition-colors cursor-pointer"
             title="Next Day"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -90,19 +90,19 @@ export const AttendanceToolbar = ({
               const d = new Date(e.target.value + "T00:00:00");
               if (!isNaN(d.getTime())) onDateChange(d);
             }}
-            className="h-10 px-3.5 rounded-xl bg-[#141414] border border-white/10 text-white/80 text-sm font-medium outline-none cursor-pointer transition-colors hover:border-white/20 focus:border-[#cb6af0] [color-scheme:dark]"
+            className="h-10 px-3.5 rounded-xl bg-surface border border-foreground/10 text-foreground/80 text-sm font-medium outline-none cursor-pointer transition-colors hover:border-foreground/20 focus:border-[#cb6af0] [color-scheme:dark]"
           />
         </div>
 
         {/* View Mode Switcher (Day / Week) */}
-        <div className="flex items-center bg-[#141414] border border-white/10 rounded-xl p-1">
+        <div className="flex items-center bg-surface border border-foreground/10 rounded-xl p-1">
           <button
             type="button"
             onClick={() => onViewModeChange("day")}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               viewMode === "day"
-                ? "bg-[#cb6af0] text-white shadow-sm"
-                : "text-white/60 hover:text-white"
+                ? "bg-purple-500 text-foreground shadow-sm"
+                : "text-foreground/60 hover:text-foreground"
             }`}
           >
             Day
@@ -112,8 +112,8 @@ export const AttendanceToolbar = ({
             onClick={() => onViewModeChange("week")}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               viewMode === "week"
-                ? "bg-[#cb6af0] text-white shadow-sm"
-                : "text-white/60 hover:text-white"
+                ? "bg-purple-500 text-foreground shadow-sm"
+                : "text-foreground/60 hover:text-foreground"
             }`}
           >
             Week

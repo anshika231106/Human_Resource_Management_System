@@ -1,7 +1,7 @@
 /* ===== Dashboard Layout ===== */
 .dashboard-page {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: var(--bg-background);
   display: flex;
   flex-direction: column;
 }
@@ -13,8 +13,8 @@
   justify-content: space-between;
   height: 56px;
   padding: 0 24px;
-  background: #111111;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -29,7 +29,7 @@
 .navbar-brand {
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-foreground);
   letter-spacing: -0.02em;
 }
 
@@ -46,18 +46,18 @@
   font-size: 13.5px;
   font-weight: 500;
   font-family: inherit;
-  color: rgba(255, 255, 255, 0.45);
+  color: color-mix(in srgb, var(--text-foreground) 45%, transparent);
   cursor: pointer;
   position: relative;
   transition: color 0.2s ease;
 }
 
 .nav-tab:hover {
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
 }
 
 .nav-tab.active {
-  color: #ffffff;
+  color: var(--text-foreground);
 }
 
 .nav-tab.active::after {
@@ -86,14 +86,14 @@
   background: none;
   border: none;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.45);
+  color: color-mix(in srgb, var(--text-foreground) 45%, transparent);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .navbar-icon-btn:hover {
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.05);
+  color: color-mix(in srgb, var(--text-foreground) 85%, transparent);
+  background: color-mix(in srgb, var(--text-foreground) 5%, transparent);
 }
 
 .navbar-icon-btn svg {
@@ -113,12 +113,12 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--text-foreground) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 12%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--text-foreground) 50%, transparent);
   transition: all 0.2s ease;
 }
 
@@ -143,8 +143,8 @@
   right: 0;
   min-width: 150px;
   padding: 6px;
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 10%, transparent);
   border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
   z-index: 50;
@@ -161,7 +161,7 @@
   border: 0;
   border-radius: 7px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.72);
+  color: color-mix(in srgb, var(--text-foreground) 72%, transparent);
   font: inherit;
   font-size: 13px;
   text-align: left;
@@ -174,7 +174,7 @@
 .navbar-logout-btn:hover,
 .navbar-logout-btn:focus-visible {
   background: rgba(203, 106, 240, 0.1);
-  color: #ffffff;
+  color: var(--text-foreground);
   outline: none;
 }
 
@@ -187,7 +187,7 @@
 .navbar-menu-divider {
   height: 1px;
   margin: 5px 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--text-foreground) 8%, transparent);
 }
 
 @keyframes profileMenuIn {
@@ -255,14 +255,14 @@
 
 .modal-content {
   background: rgba(15, 15, 15, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
   border-radius: 12px;
   padding: 32px 28px;
   max-width: 460px;
   width: 90%;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   animation: slideDown 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  color: #fff;
+  color: var(--text-foreground);
   font-family: 'Inter', system-ui, sans-serif;
 }
 
@@ -270,14 +270,14 @@
   margin: 0 0 12px;
   font-size: 20px;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-foreground);
   text-align: center;
 }
 
 .modal-subtitle {
   margin: 0 0 24px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  color: color-mix(in srgb, var(--text-foreground) 65%, transparent);
   text-align: center;
 }
 
@@ -309,7 +309,7 @@
   display: block;
   margin-bottom: 6px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
 }
 
 .required-mark {
@@ -321,10 +321,10 @@
 .form-group select {
   width: 100%;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--text-foreground) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 12%, transparent);
   border-radius: 8px;
-  color: #fff;
+  color: var(--text-foreground);
   font-size: 14px;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
@@ -355,18 +355,18 @@
 }
 
 .btn-cancel {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: color-mix(in srgb, var(--text-foreground) 8%, transparent);
+  color: var(--text-foreground);
   border: none;
 }
 
 .btn-cancel:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--text-foreground) 12%, transparent);
 }
 
 .btn-submit {
   background: #cb6af0;
-  color: #0a0a0a;
+  color: var(--bg-background);
   border: none;
 }
 
@@ -409,7 +409,7 @@
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  color: rgba(255, 255, 255, 0.3);
+  color: color-mix(in srgb, var(--text-foreground) 30%, transparent);
   pointer-events: none;
 }
 
@@ -417,10 +417,10 @@
   width: 100%;
   height: 40px;
   padding: 0 16px 0 40px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--text-foreground) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
   border-radius: 10px;
-  color: #ffffff;
+  color: var(--text-foreground);
   font-size: 14px;
   font-family: inherit;
   outline: none;
@@ -428,7 +428,7 @@
 }
 
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: color-mix(in srgb, var(--text-foreground) 30%, transparent);
 }
 
 .search-input:focus {
@@ -463,15 +463,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 18px;
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .employee-card:hover {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: color-mix(in srgb, var(--text-foreground) 10%, transparent);
   background: #181818;
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -520,7 +520,7 @@
 .employee-name {
   font-size: 14px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-foreground);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -528,7 +528,7 @@
 
 .employee-role {
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.35);
+  color: color-mix(in srgb, var(--text-foreground) 35%, transparent);
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
   white-space: nowrap;
   overflow: hidden;
@@ -544,16 +544,16 @@
   height: 28px;
   font-size: 14px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--text-foreground) 3%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
   flex-shrink: 0;
   user-select: none;
   transition: all 0.2s ease;
 }
 
 .employee-status-icon:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb, var(--text-foreground) 6%, transparent);
+  border-color: color-mix(in srgb, var(--text-foreground) 15%, transparent);
   transform: scale(1.05);
 }
 
@@ -561,7 +561,7 @@
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: rgba(255, 255, 255, 0.3);
+  color: color-mix(in srgb, var(--text-foreground) 30%, transparent);
   font-size: 15px;
 }
 
@@ -577,7 +577,7 @@
   padding: 0;
   background: none;
   border: 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--text-foreground) 50%, transparent);
   font: inherit;
   font-size: 13px;
   cursor: pointer;
@@ -593,7 +593,7 @@
   gap: 18px;
   margin: 0 0 0;
   padding: 18px 10px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-top: 0;
 }
 
@@ -602,19 +602,19 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: #141414;
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
+  background: var(--bg-surface);
 }
 
 .profile-titlebar h1 {
   margin: 0;
-  color: #fff;
+  color: var(--text-foreground);
   font-size: 14px;
   font-weight: 500;
 }
 
 .profile-titlebar span {
-  color: rgba(255, 255, 255, 0.3);
+  color: color-mix(in srgb, var(--text-foreground) 30%, transparent);
   font-size: 11px;
 }
 
@@ -630,9 +630,9 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  border: 1px solid #0a0a0a;
+  border: 1px solid var(--bg-background);
   border-radius: 50%;
-  color: #0a0a0a;
+  color: var(--bg-background);
   background: #cb6af0;
   font-size: 14px;
   cursor: pointer;
@@ -661,13 +661,13 @@
 
 .profile-header h1 {
   margin: 0;
-  color: #fff;
+  color: var(--text-foreground);
   font-size: 28px;
 }
 
 .profile-role {
   margin: 6px 0 0;
-  color: rgba(255, 255, 255, 0.45);
+  color: color-mix(in srgb, var(--text-foreground) 45%, transparent);
   font-size: 13px;
 }
 
@@ -683,7 +683,7 @@
   display: flex;
   gap: 26px;
   overflow-x: auto;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
 }
 
 .profile-tabs button {
@@ -691,7 +691,7 @@
   background: none;
   border: 0;
   padding: 0 0 13px;
-  color: rgba(255, 255, 255, 0.42);
+  color: color-mix(in srgb, var(--text-foreground) 42%, transparent);
   font: inherit;
   font-size: 13px;
   cursor: pointer;
@@ -699,12 +699,12 @@
 }
 
 .profile-tabs button.active {
-  color: #fff;
+  color: var(--text-foreground);
   border-bottom: 2px solid #cb6af0;
 }
 
 .profile-tabs button:hover {
-  color: #fff;
+  color: var(--text-foreground);
 }
 
 .profile-sections {
@@ -716,8 +716,8 @@
 
 .profile-section {
   padding: 20px;
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 12px;
 }
 
@@ -734,7 +734,7 @@
 
 .profile-section-heading h2 {
   margin: 0;
-  color: #fff;
+  color: var(--text-foreground);
   font-size: 15px;
 }
 
@@ -756,14 +756,14 @@
 .profile-detail span,
 .profile-document span {
   display: block;
-  color: rgba(255, 255, 255, 0.35);
+  color: color-mix(in srgb, var(--text-foreground) 35%, transparent);
   font-size: 11px;
   margin-bottom: 5px;
 }
 
 .profile-detail strong {
   display: block;
-  color: rgba(255, 255, 255, 0.86);
+  color: color-mix(in srgb, var(--text-foreground) 86%, transparent);
   font-size: 13px;
   font-weight: 500;
   overflow-wrap: anywhere;
@@ -780,7 +780,7 @@
   align-items: center;
   gap: 12px;
   padding: 11px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
 }
 
 .profile-document:last-child {
@@ -790,7 +790,7 @@
 
 .profile-document strong {
   display: block;
-  color: rgba(255, 255, 255, 0.84);
+  color: color-mix(in srgb, var(--text-foreground) 84%, transparent);
   font-size: 13px;
   font-weight: 500;
 }
@@ -808,7 +808,7 @@
 
 .profile-muted,
 .profile-not-found {
-  color: rgba(255, 255, 255, 0.4);
+  color: color-mix(in srgb, var(--text-foreground) 40%, transparent);
   font-size: 13px;
 }
 
@@ -836,7 +836,7 @@
 
 .resume-columns h3 {
   margin: 0 0 8px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
   font-size: 12px;
 }
 
@@ -846,7 +846,7 @@
 
 .profile-copy {
   margin: 0;
-  color: rgba(255, 255, 255, 0.45);
+  color: color-mix(in srgb, var(--text-foreground) 45%, transparent);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -869,12 +869,12 @@
 .security-divider {
   height: 1px;
   margin: 24px 0 20px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--text-foreground) 8%, transparent);
 }
 
 .security-heading {
   margin: 0 0 14px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
   font-size: 12px;
 }
 
@@ -886,7 +886,7 @@
 }
 
 .security-form label {
-  color: rgba(255, 255, 255, 0.38);
+  color: color-mix(in srgb, var(--text-foreground) 38%, transparent);
   font-size: 11px;
 }
 
@@ -897,11 +897,11 @@
   height: 38px;
   margin-top: 7px;
   padding: 0 11px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 10%, transparent);
   border-radius: 7px;
   outline: none;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-foreground);
+  background: color-mix(in srgb, var(--text-foreground) 4%, transparent);
   font: inherit;
 }
 
@@ -910,7 +910,7 @@
 }
 
 .security-form input::placeholder {
-  color: rgba(255, 255, 255, 0.22);
+  color: color-mix(in srgb, var(--text-foreground) 22%, transparent);
 }
 
 .security-save-btn {
@@ -926,7 +926,7 @@
 }
 
 .security-save-btn:hover {
-  color: #0a0a0a;
+  color: var(--bg-background);
   background: #cb6af0;
 }
 
@@ -935,7 +935,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   padding: 16px 0 22px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
 }
 
 .salary-columns {
@@ -947,7 +947,7 @@
 
 .salary-columns h3 {
   margin: 0 0 12px;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
   font-size: 12px;
   font-weight: 600;
 }
@@ -958,7 +958,7 @@
   align-items: start;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
 }
 
 .salary-row>div {
@@ -967,7 +967,7 @@
 
 .salary-row strong {
   display: block;
-  color: rgba(255, 255, 255, 0.85);
+  color: color-mix(in srgb, var(--text-foreground) 85%, transparent);
   font-size: 12px;
   font-weight: 500;
 }
@@ -975,20 +975,20 @@
 .salary-row span {
   display: block;
   margin-top: 4px;
-  color: rgba(255, 255, 255, 0.32);
+  color: color-mix(in srgb, var(--text-foreground) 32%, transparent);
   font-size: 10px;
   line-height: 1.4;
 }
 
 .salary-row b {
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--text-foreground) 80%, transparent);
   font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .salary-row small {
-  color: rgba(255, 255, 255, 0.3);
+  color: color-mix(in srgb, var(--text-foreground) 30%, transparent);
   font-size: 9px;
   font-weight: 400;
 }
@@ -1106,8 +1106,8 @@
   right: 14px;
   width: 7px;
   height: 7px;
-  border-right: 1.5px solid rgba(255, 255, 255, 0.75);
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-right: 1.5px solid color-mix(in srgb, var(--text-foreground) 75%, transparent);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--text-foreground) 75%, transparent);
   transform: translateY(-65%) rotate(45deg);
   pointer-events: none;
 }
@@ -1119,14 +1119,14 @@
 }
 
 .form-group select option {
-  color: #fff;
+  color: var(--text-foreground);
   background: #1a171b;
 }
 
 .form-group input:hover,
 .form-group select:hover {
   border-color: rgba(203, 106, 240, 0.45);
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--text-foreground) 6%, transparent);
 }
 
 .form-group input[type="date"] {
@@ -1135,11 +1135,11 @@
 
 /* ===== Time Off Page ===== */
 .leave-balance-card {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 14px;
   padding: 24px;
-  color: #fff;
+  color: var(--text-foreground);
   margin-bottom: 20px;
 }
 
@@ -1147,7 +1147,7 @@
   margin: 0 0 16px;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
 }
 
 .balance-grid {
@@ -1158,8 +1158,8 @@
 .balance-item {
   flex: 1;
   text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: color-mix(in srgb, var(--text-foreground) 3%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 10px;
   padding: 16px 8px;
 }
@@ -1167,7 +1167,7 @@
 .balance-item .label {
   display: block;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: color-mix(in srgb, var(--text-foreground) 45%, transparent);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1182,11 +1182,11 @@
 
 /* Leave Calendar */
 .leave-calendar {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 14px;
   padding: 20px 24px;
-  color: #fff;
+  color: var(--text-foreground);
   margin-bottom: 20px;
 }
 
@@ -1194,7 +1194,7 @@
   margin: 0 0 16px;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  color: color-mix(in srgb, var(--text-foreground) 75%, transparent);
   text-align: center;
   letter-spacing: 0.02em;
 }
@@ -1209,7 +1209,7 @@
   font-weight: 600;
   text-align: center;
   padding: 6px 4px;
-  color: rgba(255, 255, 255, 0.35);
+  color: color-mix(in srgb, var(--text-foreground) 35%, transparent);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1219,13 +1219,13 @@
   padding: 8px 4px;
   border-radius: 6px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--text-foreground) 70%, transparent);
   cursor: default;
   transition: background 0.15s ease;
 }
 
 .leave-calendar td:hover:not(:empty) {
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--text-foreground) 5%, transparent);
 }
 
 .leave-calendar td.has-request {
@@ -1237,8 +1237,8 @@
 
 /* Admin / Employee request list */
 .admin-actions {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 14px;
   padding: 20px 24px;
   margin-top: 8px;
@@ -1249,7 +1249,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
   gap: 12px;
 }
 
@@ -1294,7 +1294,7 @@
 .timeoff-title {
   font-size: 22px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-foreground);
   margin: 0;
   letter-spacing: -0.02em;
 }
@@ -1322,7 +1322,7 @@
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   padding-bottom: 0;
 }
 
@@ -1333,7 +1333,7 @@
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;
-  color: rgba(255, 255, 255, 0.4);
+  color: color-mix(in srgb, var(--text-foreground) 40%, transparent);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1343,11 +1343,11 @@
 }
 
 .timeoff-filter-tab:hover {
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--text-foreground) 70%, transparent);
 }
 
 .timeoff-filter-tab.active {
-  color: #fff;
+  color: var(--text-foreground);
 }
 
 .timeoff-filter-tab.active::after {
@@ -1365,8 +1365,8 @@
   font-size: 11px;
   padding: 1px 7px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.5);
+  background: color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
+  color: color-mix(in srgb, var(--text-foreground) 50%, transparent);
   font-weight: 600;
 }
 
@@ -1377,8 +1377,8 @@
 
 /* Table */
 .timeoff-table-wrap {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
   border-radius: 14px;
   overflow: hidden;
 }
@@ -1389,8 +1389,8 @@
 }
 
 .timeoff-table thead tr {
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--text-foreground) 3%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 6%, transparent);
 }
 
 .timeoff-table th {
@@ -1398,14 +1398,14 @@
   text-align: left;
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.35);
+  color: color-mix(in srgb, var(--text-foreground) 35%, transparent);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
 .timeoff-table tbody tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 5%, transparent);
   transition: background 0.15s ease;
 }
 
@@ -1414,13 +1414,13 @@
 }
 
 .timeoff-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in srgb, var(--text-foreground) 2.5%, transparent);
 }
 
 .timeoff-table td {
   padding: 14px 16px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: color-mix(in srgb, var(--text-foreground) 65%, transparent);
   vertical-align: middle;
 }
 
@@ -1439,8 +1439,8 @@
   flex: 1;
   padding: 20px 24px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: #141414;
+  border: 1px solid color-mix(in srgb, var(--text-foreground) 7.000000000000001%, transparent);
+  background: var(--bg-surface);
 }
 
 .emp-balance-card.paid {
@@ -1454,14 +1454,14 @@
 .emp-balance-label {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: color-mix(in srgb, var(--text-foreground) 60%, transparent);
   margin-bottom: 8px;
 }
 
 .emp-balance-days {
   font-size: 20px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-foreground);
 }
 
 .emp-balance-card.paid .emp-balance-days {

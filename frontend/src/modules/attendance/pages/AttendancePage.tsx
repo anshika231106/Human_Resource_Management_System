@@ -95,7 +95,7 @@ const AdminAttendancePage = () => {
   ];
 
   return (
-    <div className="attendance-page min-h-screen bg-[#0a0a0a] flex flex-col text-white">
+    <div className="attendance-page min-h-screen bg-background flex flex-col text-foreground">
       <Navbar onLogout={handleLogout} />
 
       <main className="attendance-main flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
@@ -122,7 +122,7 @@ const AdminAttendancePage = () => {
               className={`attendance-stat-card rounded-2xl border p-5 ${card.bg} ${card.border} flex items-center justify-between shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-[1.01]`}
             >
               <div>
-                <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+                <p className="text-xs font-semibold text-foreground/50 uppercase tracking-wider">
                   {card.label}
                 </p>
                 <p className={`text-3xl font-extrabold tracking-tight mt-1 ${card.color}`}>
@@ -138,8 +138,8 @@ const AdminAttendancePage = () => {
 
         {/* Main Attendance Table */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-[#141414] rounded-2xl border border-white/10">
-            <div className="flex items-center gap-3 text-white/50">
+          <div className="flex flex-col items-center justify-center py-24 bg-surface rounded-2xl border border-foreground/10">
+            <div className="flex items-center gap-3 text-foreground/50">
               <svg
                 className="w-6 h-6 animate-spin text-[#cb6af0]"
                 viewBox="0 0 24 24"
@@ -163,13 +163,13 @@ const AdminAttendancePage = () => {
             </div>
           </div>
         ) : error ? (
-          <div className="flex items-center justify-center py-16 bg-[#141414] rounded-2xl border border-red-500/20">
+          <div className="flex items-center justify-center py-16 bg-surface rounded-2xl border border-red-500/20">
             <div className="text-red-400 text-sm font-medium">
               {error}
             </div>
           </div>
         ) : filteredRecords.length === 0 ? (
-          <div className="bg-[#141414] rounded-2xl border border-white/10 p-6">
+          <div className="bg-surface rounded-2xl border border-foreground/10 p-6">
             <AttendanceEmptyState searchQuery={searchQuery} />
           </div>
         ) : (
