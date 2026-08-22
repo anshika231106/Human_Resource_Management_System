@@ -472,7 +472,7 @@
 
 .employee-card:hover {
   border-color: color-mix(in srgb, var(--text-foreground) 10%, transparent);
-  background: #181818;
+  background: color-mix(in srgb, var(--text-foreground) 4%, var(--bg-surface));
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
