@@ -1,4 +1,4 @@
-import type { Employee } from "../types/dashboard.types.ts";
+import type { Employee } from "../types/dashboard.types";
 
 interface EmployeeCardProps {
   employee: Employee;

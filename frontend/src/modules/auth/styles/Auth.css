@@ -33,6 +33,56 @@
   }
 }
 
+/* ===== Role Toggle Switch ===== */
+.role-toggle-container {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 28px;
+  gap: 4px;
+}
+
+.role-toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.role-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.role-toggle-btn:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.role-toggle-btn.active {
+  background: #cb6af0;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(203, 106, 240, 0.3);
+}
+
+.employee-no-signup {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
 /* ===== Header ===== */
 .signup-header {
   text-align: center;

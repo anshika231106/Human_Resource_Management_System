@@ -9,6 +9,7 @@ interface SignInPageProps {
 }
 
 export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPageProps) => {
+  const [role, setRole] = useState<"admin" | "employee">("admin");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,9 +39,38 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
   return (
     <div className="signup-page">
       <div className="signup-card">
+        {/* Role Switcher */}
+        <div className="role-toggle-container">
+          <button
+            type="button"
+            className={`role-toggle-btn ${role === "admin" ? "active" : ""}`}
+            onClick={() => setRole("admin")}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            Admin
+          </button>
+          <button
+            type="button"
+            className={`role-toggle-btn ${role === "employee" ? "active" : ""}`}
+            onClick={() => setRole("employee")}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Employee
+          </button>
+        </div>
+
         <AuthHeader
-          title="Welcome Back"
-          subtitle="Sign in to your enterprise workspace."
+          title={role === "admin" ? "Admin Sign In" : "Employee Sign In"}
+          subtitle={
+            role === "admin"
+              ? "Sign in to your enterprise workspace."
+              : "Sign in to access your employee portal."
+          }
         />
 
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
@@ -58,7 +88,9 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
                 if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
               }}
             />
-            <label htmlFor="signin-email">Email Address</label>
+            <label htmlFor="signin-email">
+              {role === "admin" ? "Admin Email Address" : "Employee Email Address"}
+            </label>
             {errors.email && <span className="field-error">{errors.email}</span>}
           </div>
 
@@ -106,7 +138,7 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
 
           {/* Submit */}
           <button type="submit" className="signup-btn">
-            Sign In
+            Sign In as {role === "admin" ? "Admin" : "Employee"}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
@@ -114,12 +146,18 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
           </button>
         </form>
 
-        <p className="signin-link">
-          Don't have an account?
-          <button type="button" className="text-link-btn" onClick={onNavigateToSignUp}>
-            Sign Up
-          </button>
-        </p>
+        {role === "admin" ? (
+          <p className="signin-link">
+            Don't have an account?
+            <button type="button" className="text-link-btn" onClick={onNavigateToSignUp}>
+              Sign Up
+            </button>
+          </p>
+        ) : (
+          <p className="signin-link employee-no-signup">
+            Employee registration is managed by your Admin.
+          </p>
+        )}
       </div>
 
       <AuthFooter />
