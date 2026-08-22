@@ -10,6 +10,7 @@ export interface Employee {
   joinDate?: string;
   manager?: string;
   status?: "Active" | "Inactive";
+  todayStatus?: "PRESENT" | "ABSENT" | "HALF_DAY" | "LEAVE";
   basicSalary?: number;
   hraPercent?: number;
   pfPercent?: number;

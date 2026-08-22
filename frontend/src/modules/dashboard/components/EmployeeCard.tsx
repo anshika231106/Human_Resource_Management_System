@@ -35,16 +35,18 @@ export const EmployeeCard = ({ employee, selected, onSelect, onView }: EmployeeC
           <span className="employee-role">{employee.role}</span>
         </div>
       </div>
-      <button
-        className={`employee-select-btn${selected ? " active" : ""}`}
-        onClick={(event) => {
-          event.stopPropagation();
-          onSelect?.(employee.id);
-        }}
-        aria-label={`Select ${employee.name}`}
+      <div 
+        className={`employee-status-icon status-${(employee.todayStatus || 'absent').toLowerCase()}`}
+        title={
+          employee.todayStatus === 'PRESENT' || employee.todayStatus === 'HALF_DAY'
+            ? "Present in office"
+            : employee.todayStatus === 'LEAVE'
+            ? "On leave"
+            : "Absent"
+        }
       >
-        <span className="select-circle" />
-      </button>
+        {employee.todayStatus === 'LEAVE' ? '✈️' : employee.todayStatus === 'PRESENT' || employee.todayStatus === 'HALF_DAY' ? '🟢' : '🟡'}
+      </div>
     </article>
   );
 };

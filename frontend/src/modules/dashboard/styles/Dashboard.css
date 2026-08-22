@@ -175,7 +175,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -183,18 +183,20 @@
   z-index: 999;
   animation: fadeIn 0.25s ease-out forwards;
 }
+
 .modal-content {
-  background: rgba(15,15,15,0.92);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(15, 15, 15, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 32px 28px;
   max-width: 460px;
   width: 90%;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
-  animation: slideDown 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  animation: slideDown 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   color: #fff;
   font-family: 'Inter', system-ui, sans-serif;
 }
+
 .modal-content h2 {
   margin: 0 0 12px;
   font-size: 20px;
@@ -202,63 +204,77 @@
   color: #fff;
   text-align: center;
 }
+
 .modal-subtitle {
   margin: 0 0 24px;
   font-size: 14px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.65);
   text-align: center;
 }
+
 .modal-error {
   margin: 12px 0;
   padding: 10px 14px;
-  background: rgba(203,106,240,0.12);
+  background: rgba(203, 106, 240, 0.12);
   border-left: 4px solid #cb6af0;
   border-radius: 6px;
   color: #ff8cf7;
   font-size: 13px;
 }
+
 .modal-form {
   display: grid;
   gap: 16px;
 }
+
 .form-row {
   display: flex;
   gap: 12px;
 }
+
 .form-group {
   flex: 1;
 }
+
 .form-group label {
   display: block;
   margin-bottom: 6px;
   font-size: 13px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
-.required-mark { color: #ff86ed; font-weight: 700; }
+
+.required-mark {
+  color: #ff86ed;
+  font-weight: 700;
+}
+
 .form-group input,
 .form-group select {
   width: 100%;
   padding: 10px 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   color: #fff;
   font-size: 14px;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
+
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: #cb6af0;
-  background: rgba(203,106,240,0.05);
-  box-shadow: 0 0 0 3px rgba(203,106,240,0.06);
+  background: rgba(203, 106, 240, 0.05);
+  box-shadow: 0 0 0 3px rgba(203, 106, 240, 0.06);
 }
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 8px;
 }
+
 .btn-cancel,
 .btn-submit {
   padding: 10px 20px;
@@ -268,30 +284,48 @@
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
 }
+
 .btn-cancel {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
   border: none;
 }
+
 .btn-cancel:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
 }
+
 .btn-submit {
   background: #cb6af0;
   color: #0a0a0a;
   border: none;
 }
+
 .btn-submit:hover {
   background: #e0a8ff;
   transform: translateY(-1px);
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes slideDown {
-  from { transform: translateY(-30px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .search-wrapper {
@@ -432,32 +466,26 @@
   text-overflow: ellipsis;
 }
 
-/* ===== Select Button ===== */
-.employee-select-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.select-circle {
-  display: block;
-  width: 18px;
-  height: 18px;
+/* ===== Status Icon ===== */
+.employee-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  user-select: none;
   transition: all 0.2s ease;
 }
 
-.employee-select-btn:hover .select-circle {
-  border-color: rgba(203, 106, 240, 0.5);
-}
-
-.employee-select-btn.active .select-circle {
-  border-color: #cb6af0;
-  background: #cb6af0;
-  box-shadow: inset 0 0 0 3px #141414;
+.employee-status-icon:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
 }
 
 /* ===== Empty State ===== */
@@ -988,49 +1016,85 @@
     padding: 16px;
   }
 }
-.select-wrapper { position: relative; }
-.select-wrapper::after { content: ''; position: absolute; top: 50%; right: 14px; width: 7px; height: 7px; border-right: 1.5px solid rgba(255,255,255,0.75); border-bottom: 1.5px solid rgba(255,255,255,0.75); transform: translateY(-65%) rotate(45deg); pointer-events: none; }
-.form-group select { appearance: none; padding-right: 40px; cursor: pointer; }
-.form-group select option { color: #fff; background: #1a171b; }
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.75);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.form-group select {
+  appearance: none;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.form-group select option {
+  color: #fff;
+  background: #1a171b;
+}
+
 .form-group input:hover,
-.form-group select:hover { border-color: rgba(203,106,240,0.45); background: rgba(255,255,255,0.06); }
-.form-group input[type="date"] { color-scheme: dark; }
+.form-group select:hover {
+  border-color: rgba(203, 106, 240, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.form-group input[type="date"] {
+  color-scheme: dark;
+}
 
 /* ===== Time Off Page ===== */
 .leave-balance-card {
   background: #141414;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   padding: 24px;
   color: #fff;
   margin-bottom: 20px;
 }
+
 .leave-balance-card h3 {
   margin: 0 0 16px;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
+
 .balance-grid {
   display: flex;
   gap: 16px;
 }
+
 .balance-item {
   flex: 1;
   text-align: center;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 10px;
   padding: 16px 8px;
 }
+
 .balance-item .label {
   display: block;
   font-size: 12px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+
 .balance-item .value {
   display: block;
   font-size: 28px;
@@ -1041,76 +1105,85 @@
 /* Leave Calendar */
 .leave-calendar {
   background: #141414;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   padding: 20px 24px;
   color: #fff;
   margin-bottom: 20px;
 }
+
 .leave-calendar h3 {
   margin: 0 0 16px;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   text-align: center;
   letter-spacing: 0.02em;
 }
+
 .leave-calendar table {
   width: 100%;
   border-collapse: collapse;
 }
+
 .leave-calendar th {
   font-size: 11px;
   font-weight: 600;
   text-align: center;
   padding: 6px 4px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 .leave-calendar td {
   text-align: center;
   padding: 8px 4px;
   border-radius: 6px;
   font-size: 13px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   cursor: default;
   transition: background 0.15s ease;
 }
+
 .leave-calendar td:hover:not(:empty) {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
+
 .leave-calendar td.has-request {
-  background: rgba(203,106,240,0.18);
+  background: rgba(203, 106, 240, 0.18);
   color: #cb6af0;
   font-weight: 600;
-  border: 1px solid rgba(203,106,240,0.35);
+  border: 1px solid rgba(203, 106, 240, 0.35);
 }
 
 /* Admin / Employee request list */
 .admin-actions {
   background: #141414;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   padding: 20px 24px;
   margin-top: 8px;
 }
+
 .admin-request-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   gap: 12px;
 }
+
 .admin-request-item:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
+
 .btn-approve {
-  background: rgba(52,211,153,0.15);
+  background: rgba(52, 211, 153, 0.15);
   color: #34d399;
-  border: 1px solid rgba(52,211,153,0.3);
+  border: 1px solid rgba(52, 211, 153, 0.3);
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 12px;
@@ -1118,13 +1191,15 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .btn-approve:hover {
-  background: rgba(52,211,153,0.25);
+  background: rgba(52, 211, 153, 0.25);
 }
+
 .btn-reject {
-  background: rgba(248,113,113,0.15);
+  background: rgba(248, 113, 113, 0.15);
   color: #f87171;
-  border: 1px solid rgba(248,113,113,0.3);
+  border: 1px solid rgba(248, 113, 113, 0.3);
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 12px;
@@ -1132,8 +1207,9 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .btn-reject:hover {
-  background: rgba(248,113,113,0.25);
+  background: rgba(248, 113, 113, 0.25);
 }
 
 /* ===== Time Off – shared title ===== */
@@ -1146,23 +1222,32 @@
 }
 
 /* ===== Admin view ===== */
-.timeoff-admin { width: 100%; }
+.timeoff-admin {
+  width: 100%;
+}
+
 .timeoff-admin-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.timeoff-admin-controls { display: flex; gap: 12px; align-items: center; }
+
+.timeoff-admin-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
 
 /* Filter tabs */
 .timeoff-filter-tabs {
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   padding-bottom: 0;
 }
+
 .timeoff-filter-tab {
   background: none;
   border: none;
@@ -1170,7 +1255,7 @@
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1178,10 +1263,15 @@
   position: relative;
   transition: color 0.2s ease;
 }
-.timeoff-filter-tab:hover { color: rgba(255,255,255,0.7); }
+
+.timeoff-filter-tab:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .timeoff-filter-tab.active {
   color: #fff;
 }
+
 .timeoff-filter-tab.active::after {
   content: '';
   position: absolute;
@@ -1192,84 +1282,114 @@
   background: #cb6af0;
   border-radius: 2px 2px 0 0;
 }
+
 .tab-count {
   font-size: 11px;
   padding: 1px 7px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
 }
+
 .timeoff-filter-tab.active .tab-count {
-  background: rgba(203,106,240,0.15);
+  background: rgba(203, 106, 240, 0.15);
   color: #cb6af0;
 }
 
 /* Table */
 .timeoff-table-wrap {
   background: #141414;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   overflow: hidden;
 }
+
 .timeoff-table {
   width: 100%;
   border-collapse: collapse;
 }
+
 .timeoff-table thead tr {
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
+
 .timeoff-table th {
   padding: 12px 16px;
   text-align: left;
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
+
 .timeoff-table tbody tr {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: background 0.15s ease;
 }
-.timeoff-table tbody tr:last-child { border-bottom: none; }
-.timeoff-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+
+.timeoff-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.timeoff-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
 .timeoff-table td {
   padding: 14px 16px;
   font-size: 13px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.65);
   vertical-align: middle;
 }
 
 /* ===== Employee view ===== */
-.timeoff-employee { width: 100%; }
+.timeoff-employee {
+  width: 100%;
+}
+
 .employee-balance-row {
   display: flex;
   gap: 16px;
   margin-bottom: 20px;
 }
+
 .emp-balance-card {
   flex: 1;
   padding: 20px 24px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   background: #141414;
 }
-.emp-balance-card.paid { border-left: 3px solid #cb6af0; }
-.emp-balance-card.sick { border-left: 3px solid #60a5fa; }
+
+.emp-balance-card.paid {
+  border-left: 3px solid #cb6af0;
+}
+
+.emp-balance-card.sick {
+  border-left: 3px solid #60a5fa;
+}
+
 .emp-balance-label {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 8px;
 }
+
 .emp-balance-days {
   font-size: 20px;
   font-weight: 700;
   color: #fff;
 }
-.emp-balance-card.paid .emp-balance-days { color: #cb6af0; }
-.emp-balance-card.sick .emp-balance-days { color: #60a5fa; }
-
+
+.emp-balance-card.paid .emp-balance-days {
+  color: #cb6af0;
+}
+
+.emp-balance-card.sick .emp-balance-days {
+  color: #60a5fa;
+}
