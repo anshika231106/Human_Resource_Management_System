@@ -5,6 +5,7 @@ import { EmployeeCard } from "../components/EmployeeCard";
 import { CreateEmployeeModal } from "../components/CreateEmployeeModal";
 import { mockEmployees } from "../data/mockEmployees";
 import "../styles/Dashboard.css";
+import { loadSession } from "../../auth/services/authApi"; // new import
 
 interface DashboardPageProps {
   onLogout?: () => void;
@@ -15,6 +16,9 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Determine if current user is admin to allow employee creation
+  const session = loadSession();
+  const isAdmin = session?.user?.role === "ADMIN";
 
   const filteredEmployees = mockEmployees.filter(
     (emp) =>
@@ -50,7 +54,9 @@ export const DashboardPage = ({ onLogout }: DashboardPageProps) => {
       <main className="dashboard-main">
         {/* Toolbar */}
         <div className="dashboard-toolbar">
-          <button className="new-employee-btn" onClick={() => setIsModalOpen(true)}>NEW</button>
+          {isAdmin && (
+            <button className="new-employee-btn" onClick={() => setIsModalOpen(true)}>NEW</button>
+          )}
           <div className="search-wrapper">
             <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
