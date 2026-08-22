@@ -682,6 +682,7 @@
 .profile-tabs {
   display: flex;
   gap: 26px;
+  margin-top: 14px;
   overflow-x: auto;
   border-bottom: 1px solid color-mix(in srgb, var(--text-foreground) 8%, transparent);
 }
