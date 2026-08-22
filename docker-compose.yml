@@ -1,14 +1,48 @@
+# Local infrastructure for Dayflow.
+#
+# Everything the API needs runs here, so the product works with the network
+# unplugged (ARCHITECTURE.md §1, "offline capability").
+#
+#   docker compose up -d
+#
+# Postgres is exposed on 5434, not 5432. This machine already has two native
+# Postgres services holding 5432 and 5433, and Docker's port binding does not
+# win that race — it binds successfully and the host still reaches the native
+# server, which then rejects the `dayflow` password. The symptom is a P1000
+# "authentication failed" against a database whose credentials are demonstrably
+# correct inside the container, which is a genuinely confusing twenty minutes.
+# If 5434 is taken on your machine too, change it here and in backend/.env.
+
 services:
-  db:
-    image: postgres:16
-    restart: always
+  postgres:
+    image: postgres:16-alpine
+    container_name: dayflow-postgres
+    restart: unless-stopped
     environment:
+      POSTGRES_USER: dayflow
+      POSTGRES_PASSWORD: dayflow
       POSTGRES_DB: dayflow
-      POSTGRES_USER: dayflow_admin
-      POSTGRES_PASSWORD: dayflow_pass
     ports:
-      - "5432:5432"
+      - '5434:5432'
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dayflow-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # Prisma migrate racing a not-yet-ready Postgres is a confusing failure,
+      # so the DB advertises readiness rather than us guessing with a sleep.
+      test: ['CMD-SHELL', 'pg_isready -U dayflow -d dayflow']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Email verification (spec 3.1.1) is BE1's, but the inbox belongs to the
+  # infrastructure, so it is defined here and works the moment BE1 needs it.
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: dayflow-mailhog
+    restart: unless-stopped
+    ports:
+      - '1025:1025' # SMTP
+      - '8025:8025' # web inbox
+
 volumes:
-  pgdata:
+  dayflow-pgdata:

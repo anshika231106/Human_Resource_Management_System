@@ -1,11 +1,6 @@
 node_modules/
 dist/
 .env
-*.env.local
-/generated/prisma
-
-# Prisma AI-assistant skill docs
-.claude/
-.windsurf/
-.agents/
-skills-lock.json
+.env.local
+*.log
+uploads/
