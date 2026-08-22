@@ -9,10 +9,6 @@ import { sendCredentialsEmail } from '../lib/sendCredentialsEmail';
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
-<<<<<<< Updated upstream
-// Basic admin auth middleware
-export const requireAdmin = (req: Request, res: Response, next: Function) => {
-=======
 // Requires a valid JWT for any signed-in user (admin or employee)
 const requireAuth = (req: Request, res: Response, next: Function) => {
 >>>>>>> Stashed changes
