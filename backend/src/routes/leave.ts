@@ -71,10 +71,31 @@ router.post('/request', async (req: Request, res: Response) => {
 router.patch('/:id/approve', requireAdmin, async (req: Request, res: Response) => {
   const { id } = req.params;
   const reviewerId = (req as any).user?.sub;
-  const updated = await prisma.leaveRequest.update({
-    where: { id },
-    data: { status: 'APPROVED', reviewerId },
-    include: { employee: { include: { user: true } } },
+  const updated = await prisma.$transaction(async (tx) => {
+    const request = await tx.leaveRequest.update({
+      where: { id },
+      data: { status: 'APPROVED', reviewerId },
+      include: { employee: { include: { user: true } } },
+    });
+
+    const startDate = new Date(request.startDate.toISOString().slice(0, 10) + 'T00:00:00');
+    const endDate = new Date(request.endDate.toISOString().slice(0, 10) + 'T00:00:00');
+    for (const date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+      await tx.attendanceRecord.upsert({
+        where: {
+          employeeId_date: { employeeId: request.employeeId, date: new Date(date) },
+        },
+        update: { status: 'LEAVE', checkIn: null, checkOut: null, note: request.remarks },
+        create: {
+          employeeId: request.employeeId,
+          date: new Date(date),
+          status: 'LEAVE',
+          note: request.remarks,
+        },
+      });
+    }
+
+    return request;
   });
   await prisma.notification.create({
     data: {

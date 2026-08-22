@@ -18,7 +18,9 @@ const Detail = ({ label, value }: { label: string; value?: string }) => (
 export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => {
   const navigate = useNavigate();
   const { employeeId } = useParams();
-  const isEmployeeProfile = loadSession()?.user.role === "EMPLOYEE";
+  const session = loadSession();
+  const isEmployeeProfile = session?.user.role === "EMPLOYEE";
+  const isAdmin = session?.user.role === "ADMIN";
   const [activeTab, setActiveTab] = useState<"resume" | "personal" | "salary" | "security">("resume");
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
@@ -190,14 +192,18 @@ export const EmployeeProfilePage = ({ onLogout }: { onLogout?: () => void }) => 
               <Detail label="Login ID" value={employee.email} />
               <Detail label="Account status" value="Active" />
             </div>
-            <div className="security-divider" />
-            <h3 className="security-heading">Change password</h3>
-            <form className="security-form" onSubmit={(event) => event.preventDefault()}>
-              <label>Current password<input type="password" placeholder="Enter current password" /></label>
-              <label>New password<input type="password" placeholder="Enter new password" /></label>
-              <label>Confirm password<input type="password" placeholder="Confirm new password" /></label>
-              <button type="submit" className="security-save-btn">Update password</button>
-            </form>
+            {!isAdmin && (
+              <>
+                <div className="security-divider" />
+                <h3 className="security-heading">Change password</h3>
+                <form className="security-form" onSubmit={(event) => event.preventDefault()}>
+                  <label>Current password<input type="password" placeholder="Enter current password" /></label>
+                  <label>New password<input type="password" placeholder="Enter new password" /></label>
+                  <label>Confirm password<input type="password" placeholder="Confirm new password" /></label>
+                  <button type="submit" className="security-save-btn">Update password</button>
+                </form>
+              </>
+            )}
           </section>}
 
         </div>
