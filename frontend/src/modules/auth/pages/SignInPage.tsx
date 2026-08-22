@@ -35,9 +35,19 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      onSignInSuccess?.();
+    setFormError(null);
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    try {
+      const session = await login({ loginId: loginId.trim(), password, role });
+      saveSession(session);
+      onSignInSuccess?.(session.user);
       navigate("/dashboard");
+    } catch (err) {
+      setFormError(err instanceof AuthError ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
