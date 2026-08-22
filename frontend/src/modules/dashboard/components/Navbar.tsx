@@ -92,7 +92,9 @@ export const Navbar = ({ onLogout }: NavbarProps) => {
   return (
     <nav className="dashboard-navbar">
       <div className="navbar-left">
-        <span className="navbar-brand">StaffControl</span>
+        <div className="navbar-brand" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <img src="/logo.png" alt="Company logo" style={{ width: 96, height: 96, objectFit: 'contain', borderRadius: 10 }} />
+        </div>
         <div className="navbar-tabs">
           {dynamicNavTabs.map((tab) => (
             <button

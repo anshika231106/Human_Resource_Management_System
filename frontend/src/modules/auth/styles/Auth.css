@@ -150,15 +150,15 @@
 /* ===== Header ===== */
 .signup-header {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 2px;
 }
 
 .signup-icon {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 20px;
-  background: rgba(203, 106, 240, 0.08);
-  border: 1px solid rgba(203, 106, 240, 0.2);
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 1px;
+  background: transparent;
+  border: none;
   border-radius: 14px;
   display: flex;
   align-items: center;
