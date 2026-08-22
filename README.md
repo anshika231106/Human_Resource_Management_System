@@ -1,13 +1,13 @@
 # Dayflow — Human Resource Management System
- 
+
 > Every workday, perfectly aligned.
- 
-Dayflow is a role-based HRMS that digitizes and streamlines core HR operations — onboarding, profile management, attendance tracking, leave management, payroll visibility, and approval workflows for both employees and HR admins.
- 
+
+Dayflow is a role-based Human Resource Management System (HRMS) that digitizes and streamlines core HR operations, including onboarding, profile management, attendance tracking, leave management, payroll visibility, and approval workflows for both employees and HR administrators.
+
 ---
- 
-## 📋 Table of Contents
- 
+
+## Table of Contents
+
 - [Overview](#overview)
 - [Features](#features)
 - [User Roles](#user-roles)
@@ -16,111 +16,145 @@ Dayflow is a role-based HRMS that digitizes and streamlines core HR operations �
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 ---
- 
+
 ## Overview
- 
-Dayflow provides a single platform where employees can manage their own profile, attendance, and leave requests, while HR/Admin users get full visibility and control over the workforce — approvals, payroll, and reporting — all in one dashboard.
- 
+
+Dayflow provides a single platform on which employees manage their own profile, attendance, and leave requests, while HR and administrative users retain full visibility and control over the workforce. Approvals, payroll, and reporting are consolidated into one dashboard.
+
 ### Definitions
- 
+
 | Term | Meaning |
 |---|---|
-| **Admin / HR Officer** | User with management and approval privileges |
-| **Employee** | Regular user with limited, self-service access |
-| **Time-Off** | Paid leave, sick leave, unpaid leave, etc. |
- 
+| **Administrator / HR Officer** | A user granted management and approval privileges. |
+| **Employee** | A standard user with limited, self-service access. |
+| **Time-Off** | Any category of leave, including paid leave, sick leave, and unpaid leave. |
+
 ---
- 
+
 ## Features
- 
-### 🔐 Authentication & Authorization
-- Sign up with Employee ID, Email, Password, and Role (Employee / HR)
-- Secure password rules + email verification
-- Sign in with error handling for invalid credentials
-- Role-based redirect to the appropriate dashboard
-### 📊 Dashboards
-- **Employee:** quick-access cards for Profile, Attendance, Leave Requests, and recent activity/alerts
-- **Admin/HR:** employee list, attendance records, leave approvals, and the ability to switch between employees
-### 👤 Profile Management
-- View personal details, job details, salary structure, documents, and profile picture
-- Employees can edit limited fields (address, phone, profile picture)
-- Admins can edit all employee details
-### 🕒 Attendance Management
-- Daily and weekly attendance views
-- Check-in / check-out for employees
-- Status tracking: Present, Absent, Half-day, Leave
-- Employees see only their own records; Admins see everyone's
-### 🌴 Leave & Time-Off Management
-- Apply for leave (type, date range, remarks)
-- Track request status: Pending, Approved, Rejected
-- Admin approval workflow with comments, reflected immediately in employee records
-### 💰 Payroll / Salary Management
-- Read-only payroll view for employees
-- Admins can view and update salary structures across the organization
-### 📈 Notifications & Reports
-- Email and in-app notification alerts
-- Analytics dashboard with reports (salary slips, attendance reports)
+
+### Authentication and Authorization
+
+- Registration using Employee ID, email address, password, and role (Employee or HR).
+- Enforced password complexity rules and mandatory email verification.
+- Sign-in with explicit error handling for invalid credentials.
+- Role-based redirection to the appropriate dashboard upon successful authentication.
+
+### Dashboards
+
+- **Employee.** Quick-access cards for profile, attendance, and leave requests, together with recent activity and alerts.
+- **Administrator / HR.** A consolidated employee directory, attendance records, pending leave approvals, and the ability to switch between individual employee views.
+
+### Profile Management
+
+- Access to personal details, job details, salary structure, supporting documents, and profile photograph.
+- Employees may edit a restricted set of fields, namely address, telephone number, and profile photograph.
+- Administrators may edit all employee details.
+
+### Attendance Management
+
+- Daily and weekly attendance views.
+- Check-in and check-out functionality for employees.
+- Status tracking across four states: Present, Absent, Half-day, and Leave.
+- Employees may view only their own records; administrators may view records for all employees.
+
+### Leave and Time-Off Management
+
+- Submission of leave applications specifying type, date range, and supporting remarks.
+- Request status tracking across three states: Pending, Approved, and Rejected.
+- An administrative approval workflow supporting reviewer comments, with outcomes reflected immediately in the relevant employee record.
+
+### Payroll and Salary Management
+
+- Read-only payroll view for employees.
+- Administrative access to view and update salary structures across the organization.
+
+### Notifications and Reports
+
+- Email and in-application notification alerts.
+- An analytics dashboard providing salary slips and attendance reports.
+
 ---
- 
+
 ## User Roles
- 
-| Capability | Employee | Admin / HR |
+
+The following matrix defines the capabilities available to each role.
+
+| Capability | Employee | Administrator / HR |
 |---|:---:|:---:|
-| View own profile | ✅ | ✅ |
-| Edit own profile (limited) | ✅ | — |
-| Edit any employee's profile | ❌ | ✅ |
-| View own attendance | ✅ | ✅ |
-| View all employees' attendance | ❌ | ✅ |
-| Apply for leave | ✅ | — |
-| Approve / reject leave | ❌ | ✅ |
-| View own payroll (read-only) | ✅ | ✅ |
-| Edit payroll | ❌ | ✅ |
-| View analytics & reports | ❌ | ✅ |
- 
+| View own profile | Yes | Yes |
+| Edit own profile (restricted fields) | Yes | Not applicable |
+| Edit any employee's profile | No | Yes |
+| View own attendance | Yes | Yes |
+| View attendance for all employees | No | Yes |
+| Submit a leave application | Yes | Not applicable |
+| Approve or reject a leave application | No | Yes |
+| View own payroll (read-only) | Yes | Yes |
+| Edit payroll | No | Yes |
+| View analytics and reports | No | Yes |
+
+Entries marked *Not applicable* denote capabilities that are superseded by broader administrative privileges listed elsewhere in the matrix.
+
 ---
- 
+
 ## Tech Stack
- 
+
+The technology stack has not yet been finalized. This section will be updated once the selections are confirmed.
+
 | Layer | Technology |
 |---|---|
-| Frontend | TBD |
-| Backend | TBD |
-| Database | TBD |
-| Auth | TBD |
-| Version Control | Git & GitHub |
- 
+| Frontend | To be confirmed |
+| Backend | To be confirmed |
+| Database | To be confirmed |
+| Authentication | To be confirmed |
+| Version Control | Git and GitHub |
+
 ---
 
 ## Getting Started
- 
+
 ### Prerequisites
-- Node.js (version TBD)
-- Git
-- (Database/runtime dependencies — TBD)
+
+- Node.js (required version to be confirmed).
+- Git.
+- Database and runtime dependencies, to be confirmed.
+
 ### Installation
- 
+
 ```bash
 # Clone the repository
 git clone https://github.com/AtharvaKanade/dayflow-hrms.git
 cd dayflow-hrms
- 
+
 # Install dependencies
 npm install
- 
-# Set up environment variables
+
+# Configure environment variables
 cp .env.example .env
- 
-# Run the development server
+
+# Start the development server
 npm run dev
 ```
- 
+
 ---
+
 ## Project Structure
+
+A description of the repository layout will be documented here once the directory structure has been established.
+
 ---
+
 ## Contributing
- 
-1. Create a feature branch off `main`: `git checkout -b feature/<name>`
-2. Commit with clear, descriptive messages
-3. Push and open a pull request for review
-4. Every team member is expected to commit and manage the repo directly — no single point of ownership
+
+Contributors are asked to observe the following process.
+
+1. Create a feature branch from `main` using the command `git checkout -b feature/<name>`.
+2. Commit changes with clear and descriptive commit messages.
+3. Push the branch and open a pull request for review.
+4. All team members are expected to commit to and manage the repository directly; ownership is shared rather than assigned to any single individual.
+
 ---
+
+## Roadmap
+
+Planned milestones and future enhancements will be documented in this section as the project scope is confirmed.
