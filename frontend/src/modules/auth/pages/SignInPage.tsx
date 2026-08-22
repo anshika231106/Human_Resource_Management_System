@@ -59,6 +59,22 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
     }
   };
 
+  const handleFillAdmin = () => {
+    setRole("admin");
+    setLoginId("OIPRKA20220001");
+    setPassword("Admin@123");
+    setErrors({});
+    setFormError(null);
+  };
+
+  const handleFillEmployee = () => {
+    setRole("employee");
+    setLoginId("OIAASH20230001");
+    setPassword("Welcome@123");
+    setErrors({});
+    setFormError(null);
+  };
+
   return (
     <div className="signup-page">
       <div className="signup-card">
@@ -95,6 +111,41 @@ export const SignInPage = ({ onNavigateToSignUp, onSignInSuccess }: SignInPagePr
               : "Sign in to access your employee portal."
           }
         />
+
+        {/* Quick Fill Demo Credentials */}
+        <div className="quick-fill-container">
+          <div className="quick-fill-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            Quick Fill Demo Credentials
+          </div>
+          <div className="quick-fill-buttons">
+            <button
+              type="button"
+              className="quick-fill-btn"
+              onClick={handleFillAdmin}
+              title="Fill Admin ID: OIPRKA20220001"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              Fill Admin
+            </button>
+            <button
+              type="button"
+              className="quick-fill-btn"
+              onClick={handleFillEmployee}
+              title="Fill Employee ID: OIAASH20230001"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              Fill Employee
+            </button>
+          </div>
+        </div>
 
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
           {/* Login ID */}

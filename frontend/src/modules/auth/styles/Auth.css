@@ -83,6 +83,70 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
+/* ===== Quick Fill Demo Buttons ===== */
+.quick-fill-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: rgba(203, 106, 240, 0.05);
+  border: 1px dashed rgba(203, 106, 240, 0.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.quick-fill-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #cb6af0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quick-fill-header svg {
+  width: 13px;
+  height: 13px;
+  color: #cb6af0;
+}
+
+.quick-fill-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.quick-fill-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-fill-btn:hover {
+  background: rgba(203, 106, 240, 0.15);
+  border-color: rgba(203, 106, 240, 0.4);
+  color: #ffffff;
+}
+
+.quick-fill-btn svg {
+  width: 14px;
+  height: 14px;
+  color: #cb6af0;
+}
+
 /* ===== Header ===== */
 .signup-header {
   text-align: center;
